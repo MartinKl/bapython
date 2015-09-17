@@ -1,0 +1,781 @@
+parsed file= ../wd/tuebadz_norm.tcf root= <Element '{http://www.dspin.de/data}D-Spin' at 0xb741526c>
+evaluating embedded clauses
+	evaluating S-Node 1 of 245
+	evaluating S-Node 2 of 245
+	evaluating S-Node 3 of 245
+	evaluating S-Node 4 of 245
+	evaluating S-Node 5 of 245
+	evaluating S-Node 6 of 245
+	evaluating S-Node 7 of 245
+	evaluating S-Node 8 of 245
+	evaluating S-Node 9 of 245
+	evaluating S-Node 10 of 245
+	evaluating S-Node 11 of 245
+	evaluating S-Node 12 of 245
+	evaluating S-Node 13 of 245
+	evaluating S-Node 14 of 245
+	evaluating S-Node 15 of 245
+	evaluating S-Node 16 of 245
+	evaluating S-Node 17 of 245
+	evaluating S-Node 18 of 245
+	evaluating S-Node 19 of 245
+	evaluating S-Node 20 of 245
+	evaluating S-Node 21 of 245
+	evaluating S-Node 22 of 245
+	evaluating S-Node 23 of 245
+	evaluating S-Node 24 of 245
+	evaluating S-Node 25 of 245
+	evaluating S-Node 26 of 245
+	evaluating S-Node 27 of 245
+	evaluating S-Node 28 of 245
+	evaluating S-Node 29 of 245
+	evaluating S-Node 30 of 245
+	evaluating S-Node 31 of 245
+	evaluating S-Node 32 of 245
+	evaluating S-Node 33 of 245
+	evaluating S-Node 34 of 245
+	evaluating S-Node 35 of 245
+	evaluating S-Node 36 of 245
+	evaluating S-Node 37 of 245
+	evaluating S-Node 38 of 245
+	evaluating S-Node 39 of 245
+	evaluating S-Node 40 of 245
+	evaluating S-Node 41 of 245
+	evaluating S-Node 42 of 245
+	evaluating S-Node 43 of 245
+	evaluating S-Node 44 of 245
+	evaluating S-Node 45 of 245
+	evaluating S-Node 46 of 245
+	evaluating S-Node 47 of 245
+	evaluating S-Node 48 of 245
+	evaluating S-Node 49 of 245
+	evaluating S-Node 50 of 245
+	evaluating S-Node 51 of 245
+	evaluating S-Node 52 of 245
+	evaluating S-Node 53 of 245
+	evaluating S-Node 54 of 245
+	evaluating S-Node 55 of 245
+	evaluating S-Node 56 of 245
+	evaluating S-Node 57 of 245
+	evaluating S-Node 58 of 245
+	evaluating S-Node 59 of 245
+	evaluating S-Node 60 of 245
+	evaluating S-Node 61 of 245
+	evaluating S-Node 62 of 245
+	evaluating S-Node 63 of 245
+	evaluating S-Node 64 of 245
+	evaluating S-Node 65 of 245
+	evaluating S-Node 66 of 245
+	evaluating S-Node 67 of 245
+	evaluating S-Node 68 of 245
+	evaluating S-Node 69 of 245
+	evaluating S-Node 70 of 245
+	evaluating S-Node 71 of 245
+	evaluating S-Node 72 of 245
+	evaluating S-Node 73 of 245
+	evaluating S-Node 74 of 245
+	evaluating S-Node 75 of 245
+	evaluating S-Node 76 of 245
+	evaluating S-Node 77 of 245
+	evaluating S-Node 78 of 245
+	evaluating S-Node 79 of 245
+	evaluating S-Node 80 of 245
+	evaluating S-Node 81 of 245
+	evaluating S-Node 82 of 245
+	evaluating S-Node 83 of 245
+	evaluating S-Node 84 of 245
+	evaluating S-Node 85 of 245
+	evaluating S-Node 86 of 245
+	evaluating S-Node 87 of 245
+	evaluating S-Node 88 of 245
+	evaluating S-Node 89 of 245
+	evaluating S-Node 90 of 245
+	evaluating S-Node 91 of 245
+	evaluating S-Node 92 of 245
+	evaluating S-Node 93 of 245
+	evaluating S-Node 94 of 245
+	evaluating S-Node 95 of 245
+	evaluating S-Node 96 of 245
+	evaluating S-Node 97 of 245
+	evaluating S-Node 98 of 245
+	evaluating S-Node 99 of 245
+	evaluating S-Node 100 of 245
+	evaluating S-Node 101 of 245
+	evaluating S-Node 102 of 245
+	evaluating S-Node 103 of 245
+	evaluating S-Node 104 of 245
+	evaluating S-Node 105 of 245
+	evaluating S-Node 106 of 245
+	evaluating S-Node 107 of 245
+	evaluating S-Node 108 of 245
+	evaluating S-Node 109 of 245
+	evaluating S-Node 110 of 245
+	evaluating S-Node 111 of 245
+	evaluating S-Node 112 of 245
+	evaluating S-Node 113 of 245
+	evaluating S-Node 114 of 245
+	evaluating S-Node 115 of 245
+	evaluating S-Node 116 of 245
+	evaluating S-Node 117 of 245
+	evaluating S-Node 118 of 245
+	evaluating S-Node 119 of 245
+	evaluating S-Node 120 of 245
+	evaluating S-Node 121 of 245
+	evaluating S-Node 122 of 245
+	evaluating S-Node 123 of 245
+	evaluating S-Node 124 of 245
+	evaluating S-Node 125 of 245
+	evaluating S-Node 126 of 245
+	evaluating S-Node 127 of 245
+	evaluating S-Node 128 of 245
+	evaluating S-Node 129 of 245
+	evaluating S-Node 130 of 245
+	evaluating S-Node 131 of 245
+	evaluating S-Node 132 of 245
+	evaluating S-Node 133 of 245
+	evaluating S-Node 134 of 245
+	evaluating S-Node 135 of 245
+	evaluating S-Node 136 of 245
+	evaluating S-Node 137 of 245
+	evaluating S-Node 138 of 245
+	evaluating S-Node 139 of 245
+	evaluating S-Node 140 of 245
+	evaluating S-Node 141 of 245
+	evaluating S-Node 142 of 245
+	evaluating S-Node 143 of 245
+	evaluating S-Node 144 of 245
+	evaluating S-Node 145 of 245
+	evaluating S-Node 146 of 245
+	evaluating S-Node 147 of 245
+	evaluating S-Node 148 of 245
+	evaluating S-Node 149 of 245
+	evaluating S-Node 150 of 245
+	evaluating S-Node 151 of 245
+	evaluating S-Node 152 of 245
+	evaluating S-Node 153 of 245
+	evaluating S-Node 154 of 245
+	evaluating S-Node 155 of 245
+	evaluating S-Node 156 of 245
+	evaluating S-Node 157 of 245
+	evaluating S-Node 158 of 245
+	evaluating S-Node 159 of 245
+	evaluating S-Node 160 of 245
+	evaluating S-Node 161 of 245
+	evaluating S-Node 162 of 245
+	evaluating S-Node 163 of 245
+	evaluating S-Node 164 of 245
+	evaluating S-Node 165 of 245
+	evaluating S-Node 166 of 245
+	evaluating S-Node 167 of 245
+	evaluating S-Node 168 of 245
+	evaluating S-Node 169 of 245
+	evaluating S-Node 170 of 245
+	evaluating S-Node 171 of 245
+	evaluating S-Node 172 of 245
+	evaluating S-Node 173 of 245
+	evaluating S-Node 174 of 245
+	evaluating S-Node 175 of 245
+	evaluating S-Node 176 of 245
+	evaluating S-Node 177 of 245
+	evaluating S-Node 178 of 245
+	evaluating S-Node 179 of 245
+	evaluating S-Node 180 of 245
+	evaluating S-Node 181 of 245
+	evaluating S-Node 182 of 245
+	evaluating S-Node 183 of 245
+	evaluating S-Node 184 of 245
+	evaluating S-Node 185 of 245
+	evaluating S-Node 186 of 245
+	evaluating S-Node 187 of 245
+	evaluating S-Node 188 of 245
+	evaluating S-Node 189 of 245
+	evaluating S-Node 190 of 245
+	evaluating S-Node 191 of 245
+	evaluating S-Node 192 of 245
+	evaluating S-Node 193 of 245
+	evaluating S-Node 194 of 245
+	evaluating S-Node 195 of 245
+	evaluating S-Node 196 of 245
+	evaluating S-Node 197 of 245
+	evaluating S-Node 198 of 245
+	evaluating S-Node 199 of 245
+	evaluating S-Node 200 of 245
+	evaluating S-Node 201 of 245
+	evaluating S-Node 202 of 245
+	evaluating S-Node 203 of 245
+	evaluating S-Node 204 of 245
+	evaluating S-Node 205 of 245
+	evaluating S-Node 206 of 245
+	evaluating S-Node 207 of 245
+	evaluating S-Node 208 of 245
+	evaluating S-Node 209 of 245
+	evaluating S-Node 210 of 245
+	evaluating S-Node 211 of 245
+	evaluating S-Node 212 of 245
+	evaluating S-Node 213 of 245
+	evaluating S-Node 214 of 245
+	evaluating S-Node 215 of 245
+	evaluating S-Node 216 of 245
+	evaluating S-Node 217 of 245
+	evaluating S-Node 218 of 245
+	evaluating S-Node 219 of 245
+	evaluating S-Node 220 of 245
+	evaluating S-Node 221 of 245
+	evaluating S-Node 222 of 245
+	evaluating S-Node 223 of 245
+	evaluating S-Node 224 of 245
+	evaluating S-Node 225 of 245
+	evaluating S-Node 226 of 245
+	evaluating S-Node 227 of 245
+	evaluating S-Node 228 of 245
+	evaluating S-Node 229 of 245
+	evaluating S-Node 230 of 245
+	evaluating S-Node 231 of 245
+	evaluating S-Node 232 of 245
+	evaluating S-Node 233 of 245
+	evaluating S-Node 234 of 245
+	evaluating S-Node 235 of 245
+	evaluating S-Node 236 of 245
+	evaluating S-Node 237 of 245
+	evaluating S-Node 238 of 245
+	evaluating S-Node 239 of 245
+	evaluating S-Node 240 of 245
+	evaluating S-Node 241 of 245
+	evaluating S-Node 242 of 245
+	evaluating S-Node 243 of 245
+	evaluating S-Node 244 of 245
+	evaluating S-Node 245 of 245
+evaluating NPs
+	evaluating root-np 1 of 1357 ( t_3704 )
+	evaluating root-np 2 of 1357 ( t_3702 )
+	evaluating root-np 3 of 1357 ( t_3700 )
+	evaluating root-np 4 of 1357 ( t_3708 )
+	evaluating root-np 5 of 1357 ( t_4963 )
+	evaluating root-np 6 of 1357 ( t_4431 )
+	evaluating root-np 7 of 1357 ( t_4436 )
+	evaluating root-np 8 of 1357 ( t_1850 )
+	evaluating root-np 9 of 1357 ( t_1852 )
+	evaluating root-np 10 of 1357 ( t_1854 )
+	evaluating root-np 11 of 1357 ( t_3562 )
+	evaluating root-np 12 of 1357 ( t_76 )
+	evaluating root-np 13 of 1357 ( t_72 )
+	evaluating root-np 14 of 1357 ( t_71 )
+	evaluating root-np 15 of 1357 ( t_662 )
+	evaluating root-np 16 of 1357 ( t_4119 )
+	evaluating root-np 17 of 1357 ( t_4060 )
+	evaluating root-np 18 of 1357 ( t_3833 )
+	evaluating root-np 19 of 1357 ( t_3623 )
+	evaluating root-np 20 of 1357 ( t_2886 )
+	evaluating root-np 21 of 1357 ( t_4987 )
+	evaluating root-np 22 of 1357 ( t_1638 )
+	evaluating root-np 23 of 1357 ( t_1143 )
+	evaluating root-np 24 of 1357 ( t_1141 )
+	evaluating root-np 25 of 1357 ( t_1147 )
+	evaluating root-np 26 of 1357 ( t_1145 )
+	evaluating root-np 27 of 1357 ( t_593 )
+	evaluating root-np 28 of 1357 ( t_590 )
+	evaluating root-np 29 of 1357 ( t_597 )
+	evaluating root-np 30 of 1357 ( t_599 )
+	evaluating root-np 31 of 1357 ( t_3969 )
+	evaluating root-np 32 of 1357 ( t_3965 )
+	evaluating root-np 33 of 1357 ( t_1701 )
+	evaluating root-np 34 of 1357 ( t_1707 )
+	evaluating root-np 35 of 1357 ( t_1598 )
+	evaluating root-np 36 of 1357 ( t_2884 )
+	evaluating root-np 37 of 1357 ( t_1034 )
+	evaluating root-np 38 of 1357 ( t_1033 )
+	evaluating root-np 39 of 1357 ( t_5026 )
+	evaluating root-np 40 of 1357 ( t_1039 )
+	evaluating root-np 41 of 1357 ( t_1528 )
+	evaluating root-np 42 of 1357 ( t_1522 )
+	evaluating root-np 43 of 1357 ( t_1526 )
+	evaluating root-np 44 of 1357 ( t_95 )
+	evaluating root-np 45 of 1357 ( t_93 )
+	evaluating root-np 46 of 1357 ( t_287 )
+	evaluating root-np 47 of 1357 ( t_281 )
+	evaluating root-np 48 of 1357 ( t_449 )
+	evaluating root-np 49 of 1357 ( t_116 )
+	evaluating root-np 50 of 1357 ( t_114 )
+	evaluating root-np 51 of 1357 ( t_840 )
+	evaluating root-np 52 of 1357 ( t_842 )
+	evaluating root-np 53 of 1357 ( t_846 )
+	evaluating root-np 54 of 1357 ( t_5282 )
+	evaluating root-np 55 of 1357 ( t_4694 )
+	evaluating root-np 56 of 1357 ( t_5287 )
+	evaluating root-np 57 of 1357 ( t_4649 )
+	evaluating root-np 58 of 1357 ( t_1458 )
+	evaluating root-np 59 of 1357 ( t_4480 )
+	evaluating root-np 60 of 1357 ( t_5201 )
+	evaluating root-np 61 of 1357 ( t_4695 )
+	evaluating root-np 62 of 1357 ( t_4489 )
+	evaluating root-np 63 of 1357 ( t_3060 )
+	evaluating root-np 64 of 1357 ( t_2402 )
+	evaluating root-np 65 of 1357 ( t_2391 )
+	evaluating root-np 66 of 1357 ( t_2250 )
+	evaluating root-np 67 of 1357 ( t_2395 )
+	evaluating root-np 68 of 1357 ( t_3383 )
+	evaluating root-np 69 of 1357 ( t_937 )
+	evaluating root-np 70 of 1357 ( t_931 )
+	evaluating root-np 71 of 1357 ( t_3387 )
+	evaluating root-np 72 of 1357 ( t_4734 )
+	evaluating root-np 73 of 1357 ( t_2957 )
+	evaluating root-np 74 of 1357 ( t_2330 )
+	evaluating root-np 75 of 1357 ( t_2086 )
+	evaluating root-np 76 of 1357 ( t_2083 )
+	evaluating root-np 77 of 1357 ( t_2082 )
+	evaluating root-np 78 of 1357 ( t_2081 )
+	evaluating root-np 79 of 1357 ( t_2779 )
+	evaluating root-np 80 of 1357 ( t_4899 )
+	evaluating root-np 81 of 1357 ( t_2770 )
+	evaluating root-np 82 of 1357 ( t_2772 )
+	evaluating root-np 83 of 1357 ( t_2774 )
+	evaluating root-np 84 of 1357 ( t_2776 )
+	evaluating root-np 85 of 1357 ( t_4114 )
+	evaluating root-np 86 of 1357 ( t_3565 )
+	evaluating root-np 87 of 1357 ( t_4893 )
+	evaluating root-np 88 of 1357 ( t_3568 )
+	evaluating root-np 89 of 1357 ( t_2172 )
+	evaluating root-np 90 of 1357 ( t_2171 )
+	evaluating root-np 91 of 1357 ( t_2178 )
+	evaluating root-np 92 of 1357 ( t_2371 )
+	evaluating root-np 93 of 1357 ( t_5352 )
+	evaluating root-np 94 of 1357 ( t_2379 )
+	evaluating root-np 95 of 1357 ( t_3829 )
+	evaluating root-np 96 of 1357 ( t_5160 )
+	evaluating root-np 97 of 1357 ( t_3361 )
+	evaluating root-np 98 of 1357 ( t_3179 )
+	evaluating root-np 99 of 1357 ( t_5353 )
+	evaluating root-np 100 of 1357 ( t_3171 )
+	evaluating root-np 101 of 1357 ( t_3175 )
+	evaluating root-np 102 of 1357 ( t_3202 )
+	evaluating root-np 103 of 1357 ( t_3200 )
+	evaluating root-np 104 of 1357 ( t_1998 )
+	evaluating root-np 105 of 1357 ( t_1999 )
+	evaluating root-np 106 of 1357 ( t_3618 )
+	evaluating root-np 107 of 1357 ( t_3201 )
+	evaluating root-np 108 of 1357 ( t_4796 )
+	evaluating root-np 109 of 1357 ( t_1990 )
+	evaluating root-np 110 of 1357 ( t_1992 )
+	evaluating root-np 111 of 1357 ( t_1993 )
+	evaluating root-np 112 of 1357 ( t_1994 )
+	evaluating root-np 113 of 1357 ( t_1996 )
+	evaluating root-np 114 of 1357 ( t_1997 )
+	evaluating root-np 115 of 1357 ( t_3204 )
+	evaluating root-np 116 of 1357 ( t_3771 )
+	evaluating root-np 117 of 1357 ( t_3776 )
+	evaluating root-np 118 of 1357 ( t_5073 )
+	evaluating root-np 119 of 1357 ( t_1864 )
+	evaluating root-np 120 of 1357 ( t_1867 )
+	evaluating root-np 121 of 1357 ( t_1862 )
+	evaluating root-np 122 of 1357 ( t_1868 )
+	evaluating root-np 123 of 1357 ( t_2895 )
+	evaluating root-np 124 of 1357 ( t_60 )
+	evaluating root-np 125 of 1357 ( t_67 )
+	evaluating root-np 126 of 1357 ( t_611 )
+	evaluating root-np 127 of 1357 ( t_614 )
+	evaluating root-np 128 of 1357 ( t_616 )
+	evaluating root-np 129 of 1357 ( t_3603 )
+	evaluating root-np 130 of 1357 ( t_4813 )
+	evaluating root-np 131 of 1357 ( t_4811 )
+	evaluating root-np 132 of 1357 ( t_4817 )
+	evaluating root-np 133 of 1357 ( t_4815 )
+	evaluating root-np 134 of 1357 ( t_5071 )
+	evaluating root-np 135 of 1357 ( t_3288 )
+	evaluating root-np 136 of 1357 ( t_1608 )
+	evaluating root-np 137 of 1357 ( t_1601 )
+	evaluating root-np 138 of 1357 ( t_1605 )
+	evaluating root-np 139 of 1357 ( t_4258 )
+	evaluating root-np 140 of 1357 ( t_4259 )
+	evaluating root-np 141 of 1357 ( t_4252 )
+	evaluating root-np 142 of 1357 ( t_4254 )
+	evaluating root-np 143 of 1357 ( t_3919 )
+	evaluating root-np 144 of 1357 ( t_728 )
+	evaluating root-np 145 of 1357 ( t_725 )
+	evaluating root-np 146 of 1357 ( t_720 )
+	evaluating root-np 147 of 1357 ( t_1736 )
+	evaluating root-np 148 of 1357 ( t_1730 )
+	evaluating root-np 149 of 1357 ( t_1732 )
+	evaluating root-np 150 of 1357 ( t_1040 )
+	evaluating root-np 151 of 1357 ( t_1044 )
+	evaluating root-np 152 of 1357 ( t_1049 )
+	evaluating root-np 153 of 1357 ( t_1518 )
+	evaluating root-np 154 of 1357 ( t_1284 )
+	evaluating root-np 155 of 1357 ( t_1286 )
+	evaluating root-np 156 of 1357 ( t_1281 )
+	evaluating root-np 157 of 1357 ( t_4307 )
+	evaluating root-np 158 of 1357 ( t_87 )
+	evaluating root-np 159 of 1357 ( t_85 )
+	evaluating root-np 160 of 1357 ( t_5146 )
+	evaluating root-np 161 of 1357 ( t_89 )
+	evaluating root-np 162 of 1357 ( t_128 )
+	evaluating root-np 163 of 1357 ( t_5277 )
+	evaluating root-np 164 of 1357 ( t_123 )
+	evaluating root-np 165 of 1357 ( t_122 )
+	evaluating root-np 166 of 1357 ( t_437 )
+	evaluating root-np 167 of 1357 ( t_4759 )
+	evaluating root-np 168 of 1357 ( t_1636 )
+	evaluating root-np 169 of 1357 ( t_2418 )
+	evaluating root-np 170 of 1357 ( t_1463 )
+	evaluating root-np 171 of 1357 ( t_1465 )
+	evaluating root-np 172 of 1357 ( t_4381 )
+	evaluating root-np 173 of 1357 ( t_1195 )
+	evaluating root-np 174 of 1357 ( t_4617 )
+	evaluating root-np 175 of 1357 ( t_542 )
+	evaluating root-np 176 of 1357 ( t_549 )
+	evaluating root-np 177 of 1357 ( t_3842 )
+	evaluating root-np 178 of 1357 ( t_5109 )
+	evaluating root-np 179 of 1357 ( t_5341 )
+	evaluating root-np 180 of 1357 ( t_941 )
+	evaluating root-np 181 of 1357 ( t_944 )
+	evaluating root-np 182 of 1357 ( t_946 )
+	evaluating root-np 183 of 1357 ( t_4740 )
+	evaluating root-np 184 of 1357 ( t_2978 )
+	evaluating root-np 185 of 1357 ( t_2969 )
+	evaluating root-np 186 of 1357 ( t_2967 )
+	evaluating root-np 187 of 1357 ( t_2962 )
+	evaluating root-np 188 of 1357 ( t_2746 )
+	evaluating root-np 189 of 1357 ( t_2741 )
+	evaluating root-np 190 of 1357 ( t_3400 )
+	evaluating root-np 191 of 1357 ( t_2985 )
+	evaluating root-np 192 of 1357 ( t_2982 )
+	evaluating root-np 193 of 1357 ( t_3007 )
+	evaluating root-np 194 of 1357 ( t_2988 )
+	evaluating root-np 195 of 1357 ( t_2974 )
+	evaluating root-np 196 of 1357 ( t_3962 )
+	evaluating root-np 197 of 1357 ( t_4230 )
+	evaluating root-np 198 of 1357 ( t_2185 )
+	evaluating root-np 199 of 1357 ( t_2180 )
+	evaluating root-np 200 of 1357 ( t_2342 )
+	evaluating root-np 201 of 1357 ( t_2345 )
+	evaluating root-np 202 of 1357 ( t_2349 )
+	evaluating root-np 203 of 1357 ( t_3721 )
+	evaluating root-np 204 of 1357 ( t_4378 )
+	evaluating root-np 205 of 1357 ( t_5344 )
+	evaluating root-np 206 of 1357 ( t_3720 )
+	evaluating root-np 207 of 1357 ( t_4398 )
+	evaluating root-np 208 of 1357 ( t_1982 )
+	evaluating root-np 209 of 1357 ( t_690 )
+	evaluating root-np 210 of 1357 ( t_4787 )
+	evaluating root-np 211 of 1357 ( t_692 )
+	evaluating root-np 212 of 1357 ( t_3723 )
+	evaluating root-np 213 of 1357 ( t_5379 )
+	evaluating root-np 214 of 1357 ( t_697 )
+	evaluating root-np 215 of 1357 ( t_3760 )
+	evaluating root-np 216 of 1357 ( t_1948 )
+	evaluating root-np 217 of 1357 ( t_3768 )
+	evaluating root-np 218 of 1357 ( t_5144 )
+	evaluating root-np 219 of 1357 ( t_1872 )
+	evaluating root-np 220 of 1357 ( t_1870 )
+	evaluating root-np 221 of 1357 ( t_1874 )
+	evaluating root-np 222 of 1357 ( t_3167 )
+	evaluating root-np 223 of 1357 ( t_3165 )
+	evaluating root-np 224 of 1357 ( t_3164 )
+	evaluating root-np 225 of 1357 ( t_3162 )
+	evaluating root-np 226 of 1357 ( t_3160 )
+	evaluating root-np 227 of 1357 ( t_3584 )
+	evaluating root-np 228 of 1357 ( t_3587 )
+	evaluating root-np 229 of 1357 ( t_3580 )
+	evaluating root-np 230 of 1357 ( t_601 )
+	evaluating root-np 231 of 1357 ( t_605 )
+	evaluating root-np 232 of 1357 ( t_608 )
+	evaluating root-np 233 of 1357 ( t_3340 )
+	evaluating root-np 234 of 1357 ( t_4808 )
+	evaluating root-np 235 of 1357 ( t_3290 )
+	evaluating root-np 236 of 1357 ( t_3295 )
+	evaluating root-np 237 of 1357 ( t_3299 )
+	evaluating root-np 238 of 1357 ( t_3642 )
+	evaluating root-np 239 of 1357 ( t_4243 )
+	evaluating root-np 240 of 1357 ( t_4241 )
+	evaluating root-np 241 of 1357 ( t_3607 )
+	evaluating root-np 242 of 1357 ( t_3647 )
+	evaluating root-np 243 of 1357 ( t_5219 )
+	evaluating root-np 244 of 1357 ( t_3477 )
+	evaluating root-np 245 of 1357 ( t_3644 )
+	evaluating root-np 246 of 1357 ( t_738 )
+	evaluating root-np 247 of 1357 ( t_739 )
+	evaluating root-np 248 of 1357 ( t_735 )
+	evaluating root-np 249 of 1357 ( t_732 )
+	evaluating root-np 250 of 1357 ( t_730 )
+	evaluating root-np 251 of 1357 ( t_1726 )
+	evaluating root-np 252 of 1357 ( t_1725 )
+	evaluating root-np 253 of 1357 ( t_1051 )
+	evaluating root-np 254 of 1357 ( t_1054 )
+	evaluating root-np 255 of 1357 ( t_1508 )
+	evaluating root-np 256 of 1357 ( t_1293 )
+	evaluating root-np 257 of 1357 ( t_1295 )
+	evaluating root-np 258 of 1357 ( t_1298 )
+	evaluating root-np 259 of 1357 ( t_2604 )
+	evaluating root-np 260 of 1357 ( t_135 )
+	evaluating root-np 261 of 1357 ( t_137 )
+	evaluating root-np 262 of 1357 ( t_132 )
+	evaluating root-np 263 of 1357 ( t_1617 )
+	evaluating root-np 264 of 1357 ( t_428 )
+	evaluating root-np 265 of 1357 ( t_1612 )
+	evaluating root-np 266 of 1357 ( t_426 )
+	evaluating root-np 267 of 1357 ( t_282 )
+	evaluating root-np 268 of 1357 ( t_2406 )
+	evaluating root-np 269 of 1357 ( t_5190 )
+	evaluating root-np 270 of 1357 ( t_1476 )
+	evaluating root-np 271 of 1357 ( t_1474 )
+	evaluating root-np 272 of 1357 ( t_1471 )
+	evaluating root-np 273 of 1357 ( t_1188 )
+	evaluating root-np 274 of 1357 ( t_1185 )
+	evaluating root-np 275 of 1357 ( t_555 )
+	evaluating root-np 276 of 1357 ( t_553 )
+	evaluating root-np 277 of 1357 ( t_551 )
+	evaluating root-np 278 of 1357 ( t_2576 )
+	evaluating root-np 279 of 1357 ( t_2574 )
+	evaluating root-np 280 of 1357 ( t_2571 )
+	evaluating root-np 281 of 1357 ( t_3053 )
+	evaluating root-np 282 of 1357 ( t_4772 )
+	evaluating root-np 283 of 1357 ( t_956 )
+	evaluating root-np 284 of 1357 ( t_447 )
+	evaluating root-np 285 of 1357 ( t_3738 )
+	evaluating root-np 286 of 1357 ( t_4753 )
+	evaluating root-np 287 of 1357 ( t_3052 )
+	evaluating root-np 288 of 1357 ( t_2971 )
+	evaluating root-np 289 of 1357 ( t_443 )
+	evaluating root-np 290 of 1357 ( t_2975 )
+	evaluating root-np 291 of 1357 ( t_2723 )
+	evaluating root-np 292 of 1357 ( t_2753 )
+	evaluating root-np 293 of 1357 ( t_2751 )
+	evaluating root-np 294 of 1357 ( t_2757 )
+	evaluating root-np 295 of 1357 ( t_2755 )
+	evaluating root-np 296 of 1357 ( t_3051 )
+	evaluating root-np 297 of 1357 ( t_2759 )
+	evaluating root-np 298 of 1357 ( t_2721 )
+	evaluating root-np 299 of 1357 ( t_2423 )
+	evaluating root-np 300 of 1357 ( t_2997 )
+	evaluating root-np 301 of 1357 ( t_2990 )
+	evaluating root-np 302 of 1357 ( t_2426 )
+	evaluating root-np 303 of 1357 ( t_2428 )
+	evaluating root-np 304 of 1357 ( t_3920 )
+	evaluating root-np 305 of 1357 ( t_3057 )
+	evaluating root-np 306 of 1357 ( t_5407 )
+	evaluating root-np 307 of 1357 ( t_2197 )
+	evaluating root-np 308 of 1357 ( t_4135 )
+	evaluating root-np 309 of 1357 ( t_2351 )
+	evaluating root-np 310 of 1357 ( t_2350 )
+	evaluating root-np 311 of 1357 ( t_4131 )
+	evaluating root-np 312 of 1357 ( t_4475 )
+	evaluating root-np 313 of 1357 ( t_4774 )
+	evaluating root-np 314 of 1357 ( t_3893 )
+	evaluating root-np 315 of 1357 ( t_5409 )
+	evaluating root-np 316 of 1357 ( t_3891 )
+	evaluating root-np 317 of 1357 ( t_2643 )
+	evaluating root-np 318 of 1357 ( t_4121 )
+	evaluating root-np 319 of 1357 ( t_3590 )
+	evaluating root-np 320 of 1357 ( t_3025 )
+	evaluating root-np 321 of 1357 ( t_4529 )
+	evaluating root-np 322 of 1357 ( t_4075 )
+	evaluating root-np 323 of 1357 ( t_3866 )
+	evaluating root-np 324 of 1357 ( t_1889 )
+	evaluating root-np 325 of 1357 ( t_1882 )
+	evaluating root-np 326 of 1357 ( t_1880 )
+	evaluating root-np 327 of 1357 ( t_3113 )
+	evaluating root-np 328 of 1357 ( t_3111 )
+	evaluating root-np 329 of 1357 ( t_3114 )
+	evaluating root-np 330 of 1357 ( t_3115 )
+	evaluating root-np 331 of 1357 ( t_3628 )
+	evaluating root-np 332 of 1357 ( t_638 )
+	evaluating root-np 333 of 1357 ( t_637 )
+	evaluating root-np 334 of 1357 ( t_636 )
+	evaluating root-np 335 of 1357 ( t_631 )
+	evaluating root-np 336 of 1357 ( t_4839 )
+	evaluating root-np 337 of 1357 ( t_4419 )
+	evaluating root-np 338 of 1357 ( t_4831 )
+	evaluating root-np 339 of 1357 ( t_4253 )
+	evaluating root-np 340 of 1357 ( t_4350 )
+	evaluating root-np 341 of 1357 ( t_3843 )
+	evaluating root-np 342 of 1357 ( t_4236 )
+	evaluating root-np 343 of 1357 ( t_4235 )
+	evaluating root-np 344 of 1357 ( t_4960 )
+	evaluating root-np 345 of 1357 ( t_3247 )
+	evaluating root-np 346 of 1357 ( t_3245 )
+	evaluating root-np 347 of 1357 ( t_3240 )
+	evaluating root-np 348 of 1357 ( t_4966 )
+	evaluating root-np 349 of 1357 ( t_3938 )
+	evaluating root-np 350 of 1357 ( t_3248 )
+	evaluating root-np 351 of 1357 ( t_708 )
+	evaluating root-np 352 of 1357 ( t_4647 )
+	evaluating root-np 353 of 1357 ( t_701 )
+	evaluating root-np 354 of 1357 ( t_700 )
+	evaluating root-np 355 of 1357 ( t_4908 )
+	evaluating root-np 356 of 1357 ( t_647 )
+	evaluating root-np 357 of 1357 ( t_1065 )
+	evaluating root-np 358 of 1357 ( t_1269 )
+	evaluating root-np 359 of 1357 ( t_1266 )
+	evaluating root-np 360 of 1357 ( t_1264 )
+	evaluating root-np 361 of 1357 ( t_1263 )
+	evaluating root-np 362 of 1357 ( t_417 )
+	evaluating root-np 363 of 1357 ( t_149 )
+	evaluating root-np 364 of 1357 ( t_418 )
+	evaluating root-np 365 of 1357 ( t_383 )
+	evaluating root-np 366 of 1357 ( t_4416 )
+	evaluating root-np 367 of 1357 ( t_892 )
+	evaluating root-np 368 of 1357 ( t_4698 )
+	evaluating root-np 369 of 1357 ( t_2733 )
+	evaluating root-np 370 of 1357 ( t_5185 )
+	evaluating root-np 371 of 1357 ( t_3393 )
+	evaluating root-np 372 of 1357 ( t_1407 )
+	evaluating root-np 373 of 1357 ( t_1404 )
+	evaluating root-np 374 of 1357 ( t_2494 )
+	evaluating root-np 375 of 1357 ( t_2491 )
+	evaluating root-np 376 of 1357 ( t_967 )
+	evaluating root-np 377 of 1357 ( t_965 )
+	evaluating root-np 378 of 1357 ( t_1316 )
+	evaluating root-np 379 of 1357 ( t_1310 )
+	evaluating root-np 380 of 1357 ( t_4768 )
+	evaluating root-np 381 of 1357 ( t_1086 )
+	evaluating root-np 382 of 1357 ( t_1080 )
+	evaluating root-np 383 of 1357 ( t_4415 )
+	evaluating root-np 384 of 1357 ( t_2552 )
+	evaluating root-np 385 of 1357 ( t_4765 )
+	evaluating root-np 386 of 1357 ( t_2218 )
+	evaluating root-np 387 of 1357 ( t_2216 )
+	evaluating root-np 388 of 1357 ( t_2214 )
+	evaluating root-np 389 of 1357 ( t_2212 )
+	evaluating root-np 390 of 1357 ( t_2210 )
+	evaluating root-np 391 of 1357 ( t_4368 )
+	evaluating root-np 392 of 1357 ( t_2694 )
+	evaluating root-np 393 of 1357 ( t_4284 )
+	evaluating root-np 394 of 1357 ( t_4410 )
+	evaluating root-np 395 of 1357 ( t_4730 )
+	evaluating root-np 396 of 1357 ( t_1790 )
+	evaluating root-np 397 of 1357 ( t_5410 )
+	evaluating root-np 398 of 1357 ( t_2322 )
+	evaluating root-np 399 of 1357 ( t_2324 )
+	evaluating root-np 400 of 1357 ( t_1797 )
+	evaluating root-np 401 of 1357 ( t_5264 )
+	evaluating root-np 402 of 1357 ( t_1795 )
+	evaluating root-np 403 of 1357 ( t_3756 )
+	evaluating root-np 404 of 1357 ( t_3750 )
+	evaluating root-np 405 of 1357 ( t_3753 )
+	evaluating root-np 406 of 1357 ( t_2036 )
+	evaluating root-np 407 of 1357 ( t_2037 )
+	evaluating root-np 408 of 1357 ( t_2032 )
+	evaluating root-np 409 of 1357 ( t_2033 )
+	evaluating root-np 410 of 1357 ( t_3863 )
+	evaluating root-np 411 of 1357 ( t_4923 )
+	evaluating root-np 412 of 1357 ( t_2568 )
+	evaluating root-np 413 of 1357 ( t_3037 )
+	evaluating root-np 414 of 1357 ( t_3030 )
+	evaluating root-np 415 of 1357 ( t_3033 )
+	evaluating root-np 416 of 1357 ( t_5359 )
+	evaluating root-np 417 of 1357 ( t_1898 )
+	evaluating root-np 418 of 1357 ( t_1894 )
+	evaluating root-np 419 of 1357 ( t_1893 )
+	evaluating root-np 420 of 1357 ( t_1892 )
+	evaluating root-np 421 of 1357 ( t_3106 )
+	evaluating root-np 422 of 1357 ( t_3109 )
+	evaluating root-np 423 of 1357 ( t_1648 )
+	evaluating root-np 424 of 1357 ( t_3637 )
+	evaluating root-np 425 of 1357 ( t_3633 )
+	evaluating root-np 426 of 1357 ( t_3631 )
+	evaluating root-np 427 of 1357 ( t_1760 )
+	evaluating root-np 428 of 1357 ( t_628 )
+	evaluating root-np 429 of 1357 ( t_622 )
+	evaluating root-np 430 of 1357 ( t_627 )
+	evaluating root-np 431 of 1357 ( t_4820 )
+	evaluating root-np 432 of 1357 ( t_4827 )
+	evaluating root-np 433 of 1357 ( t_1643 )
+	evaluating root-np 434 of 1357 ( t_1424 )
+	evaluating root-np 435 of 1357 ( t_4223 )
+	evaluating root-np 436 of 1357 ( t_711 )
+	evaluating root-np 437 of 1357 ( t_713 )
+	evaluating root-np 438 of 1357 ( t_1420 )
+	evaluating root-np 439 of 1357 ( t_718 )
+	evaluating root-np 440 of 1357 ( t_4917 )
+	evaluating root-np 441 of 1357 ( t_4911 )
+	evaluating root-np 442 of 1357 ( t_5009 )
+	evaluating root-np 443 of 1357 ( t_1070 )
+	evaluating root-np 444 of 1357 ( t_1961 )
+	evaluating root-np 445 of 1357 ( t_1278 )
+	evaluating root-np 446 of 1357 ( t_1276 )
+	evaluating root-np 447 of 1357 ( t_151 )
+	evaluating root-np 448 of 1357 ( t_158 )
+	evaluating root-np 449 of 1357 ( t_390 )
+	evaluating root-np 450 of 1357 ( t_394 )
+	evaluating root-np 451 of 1357 ( t_396 )
+	evaluating root-np 452 of 1357 ( t_5051 )
+	evaluating root-np 453 of 1357 ( t_1966 )
+	evaluating root-np 454 of 1357 ( t_4684 )
+	evaluating root-np 455 of 1357 ( t_4068 )
+	evaluating root-np 456 of 1357 ( t_4689 )
+	evaluating root-np 457 of 1357 ( t_1415 )
+	evaluating root-np 458 of 1357 ( t_4653 )
+	evaluating root-np 459 of 1357 ( t_578 )
+	evaluating root-np 460 of 1357 ( t_3988 )
+	evaluating root-np 461 of 1357 ( t_572 )
+	evaluating root-np 462 of 1357 ( t_970 )
+	evaluating root-np 463 of 1357 ( t_973 )
+	evaluating root-np 464 of 1357 ( t_1304 )
+	evaluating root-np 465 of 1357 ( t_1309 )
+	evaluating root-np 466 of 1357 ( t_1096 )
+	evaluating root-np 467 of 1357 ( t_5082 )
+	evaluating root-np 468 of 1357 ( t_5084 )
+	evaluating root-np 469 of 1357 ( t_884 )
+	evaluating root-np 470 of 1357 ( t_882 )
+	evaluating root-np 471 of 1357 ( t_888 )
+	evaluating root-np 472 of 1357 ( t_3076 )
+	evaluating root-np 473 of 1357 ( t_2209 )
+	evaluating root-np 474 of 1357 ( t_2205 )
+	evaluating root-np 475 of 1357 ( t_2204 )
+	evaluating root-np 476 of 1357 ( t_2201 )
+	evaluating root-np 477 of 1357 ( t_1490 )
+	evaluating root-np 478 of 1357 ( t_3337 )
+	evaluating root-np 479 of 1357 ( t_2689 )
+	evaluating root-np 480 of 1357 ( t_1495 )
+	evaluating root-np 481 of 1357 ( t_4506 )
+	evaluating root-np 482 of 1357 ( t_4150 )
+	evaluating root-np 483 of 1357 ( t_2338 )
+	evaluating root-np 484 of 1357 ( t_2332 )
+	evaluating root-np 485 of 1357 ( t_2335 )
+	evaluating root-np 486 of 1357 ( t_4835 )
+	evaluating root-np 487 of 1357 ( t_5198 )
+	evaluating root-np 488 of 1357 ( t_4406 )
+	evaluating root-np 489 of 1357 ( t_3993 )
+	evaluating root-np 490 of 1357 ( t_2560 )
+	evaluating root-np 491 of 1357 ( t_4156 )
+	evaluating root-np 492 of 1357 ( t_5166 )
+	evaluating root-np 493 of 1357 ( t_2442 )
+	evaluating root-np 494 of 1357 ( t_2025 )
+	evaluating root-np 495 of 1357 ( t_2027 )
+	evaluating root-np 496 of 1357 ( t_1584 )
+	evaluating root-np 497 of 1357 ( t_2022 )
+	evaluating root-np 498 of 1357 ( t_2029 )
+	evaluating root-np 499 of 1357 ( t_4040 )
+	evaluating root-np 500 of 1357 ( t_2524 )
+	evaluating root-np 501 of 1357 ( t_4323 )
+	evaluating root-np 502 of 1357 ( t_2521 )
+	evaluating root-np 503 of 1357 ( t_3807 )
+	evaluating root-np 504 of 1357 ( t_5119 )
+	evaluating root-np 505 of 1357 ( t_4503 )
+	evaluating root-np 506 of 1357 ( t_4468 )
+	evaluating root-np 507 of 1357 ( t_3138 )
+	evaluating root-np 508 of 1357 ( t_3134 )
+	evaluating root-np 509 of 1357 ( t_3130 )
+	evaluating root-np 510 of 1357 ( t_3312 )
+	evaluating root-np 511 of 1357 ( t_3649 )
+	evaluating root-np 512 of 1357 ( t_3485 )
+	evaluating root-np 513 of 1357 ( t_3482 )
+	evaluating root-np 514 of 1357 ( t_3488 )
+	evaluating root-np 515 of 1357 ( t_2454 )
+	evaluating root-np 516 of 1357 ( t_4785 )
+	evaluating root-np 517 of 1357 ( t_1936 )
+	evaluating root-np 518 of 1357 ( t_1934 )
+	evaluating root-np 519 of 1357 ( t_1938 )
+	evaluating root-np 520 of 1357 ( t_1939 )
+	evaluating root-np 521 of 1357 ( t_5098 )
+	evaluating root-np 522 of 1357 ( t_4214 )
+	evaluating root-np 523 of 1357 ( t_4217 )
+	evaluating root-np 524 of 1357 ( t_4022 )
+	evaluating root-np 525 of 1357 ( t_761 )
+	evaluating root-np 526 of 1357 ( t_764 )
+	evaluating root-np 527 of 1357 ( t_767 )
+	evaluating root-np 528 of 1357 ( t_766 )
+	evaluating root-np 529 of 1357 ( t_3790 )
+	evaluating root-np 530 of 1357 ( t_4968 )
+	evaluating root-np 531 of 1357 ( t_3381 )
+	evaluating root-np 532 of 1357 ( t_4660 )
+	evaluating root-np 533 of 1357 ( t_3528 )
