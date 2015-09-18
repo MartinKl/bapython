@@ -6,18 +6,18 @@ import sys, os, xml.etree.ElementTree as ET, re
 if len(sys.argv)!=2:
     exit()
 
-edgetypes = re.compile('C?OBJC|C?SUBJC|C?NEB|C?REL|C?OBJI|C?RES|CS')
+edgetypes = re.compile('C?OBJC|C?SUBJC|C?NEB|C?REL|C?OBJI|CS')
 conclauseedges = re.compile('CNEB|COBJC|CSUBJC|CREL|CRES|CS')
 
 nppattern = re.compile('(COR)?C?VOK|(COR)?C?ZEIT|RES|(COR)?C?ATTR|(COR)?C?GRAD|(COR)?C?SUBJ|(COR)?C?OBJA|(COR)?C?OBJD|(COR)?C?PN|(COR)?C?PRED|(COR)?C?GMOD|(COR)?C?OBJG|(COR)?C?APP|(COR)?C?MOD|(COR)?CJ|(COR)?EXPL')#took out |(COR)?C?KOMP
-nkpattern = re.compile('N.|PPER')
+nkpattern = re.compile('N.|PPER|PRF|PIS|PDS|PPOSS|PWS')#PRELS bleibt draußen
 
 ppconda = re.compile('(COR)?C?OBJP|(COR)?C?MOD|APP|C?PRED|C?PN|(COR)?X.*/') #import after this node, a PN-node musst follow! Otherwise we get too much crap
 
 def rec_eval_embedding(tokenid, parentlevel, depth, npsensitive):		
 	slevels[tokenid]= parentlevel
 	depths[tokenid]= str(depth)
-	if (tokenid not in nprootids):
+	if (tokenid not in nprootids and nkpattern.match(postags[tokenid])):
 		nprootids[tokenid]= 'N/A'	
 	children = root.findall(".//*[@govIDs='"+tokenid+"']")
 	edgeload[tokenid]= str(len(children))	
@@ -45,7 +45,7 @@ def rec_eval_nps(tokenid, gov, root_id, depth):
 		func = funcs[id]
 		if (nppattern.match(func) and nkpattern.match(postags[id])):
 			
-			rec_eval_nps(id, func, id, (depth if func[0]=='C' else depth+1))#errors with COR?
+			rec_eval_nps(id, func, tokenid, (depth if func[0]=='C' else depth+1))#errors with COR?
 		else:
 			rec_eval_nps(id, gov, root_id, depth)
 	
@@ -58,7 +58,7 @@ root = xmltree.getroot()
 nstc = '{http://www.dspin.de/data/textcorpus}'
 print('parsed file=',file,'root=',root)
 tokens={}
-govs={}
+govs={}#I'm really happy to have this dict
 funcs={}
 #now we can work
 for token in root.iter(nstc+'token'):
@@ -105,7 +105,6 @@ edgeload={}
 pplevels={}
 ppdepths={}
 for node in funcs.keys():	
-	edgeload[node]= str(0)
 	func=funcs[node]			
 	if (func=='S'):
 		roots.append(node)
@@ -113,16 +112,16 @@ for node in funcs.keys():
 		depths[node]='0'
 	elif (func=='CS'):
 		domid=root.find(".//*[@depIDs='"+node+"'][@func='CS']").attrib['govIDs']
-		domdomid=root.find(".//*[@depIDs='"+domid+"'][@func='CS']").attrib['govIDs']
+		domdomid=root.find(".//*[@depIDs='"+domid+"']").attrib['govIDs']
 		if (funcs[domid]=='KON' and tokens[domdomid]=='_'):
 			roots.append(node)
 			slevels[node]='S'
 			slevels[domid]='S'
 			depths[node]='0'	
 			depths[domid]='0'		
-	else:
-		slevels[node]=('S' if func!='N/A' else 'N/A')
-		depths[node]=('0' if func!='N/A' else 'N/A')		
+	#else:
+	#	slevels[node]=('S' if func!='N/A' else 'N/A')
+	#	depths[node]=('0' if func!='N/A' else 'N/A')		
 		#if (ppconda.match(func) and not root.find(".//[@govIDs='"+node+"'][@func='PN'") is None):
 		#	#jippy, we found a PP -> maybe we should simply mark it, attention: coordinated PNs
 		#	print('')
@@ -150,7 +149,7 @@ l=len(rootnps)
 for np in rootnps:
 	print('\tevaluating root-np',npcount,'of',l,'(',np,')')
 	npcount+=1
-	rec_eval_nps(np, 'N/A', root.find(".//*[@depIDs='"+np+"']").attrib['govIDs'], 0)
+	rec_eval_nps(np, funcs[np], root.find(".//*[@depIDs='"+np+"']").attrib['govIDs'], 0)
 
 basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tedgeload\ts_parent\tdepth\tnp_root\tnp_root_id\tnp_depth'
 nl = '\n'
@@ -167,9 +166,9 @@ for sentence in root.iter(nstc+'sentence'):
 		basedata+= tab+('N/A' if not tid in postags else postags[tid])
 		basedata+= tab+govs[tid]
 		basedata+= tab+funcs[tid]
-		basedata+= tab+edgeload[tid]
-		basedata+= tab+slevels[tid]
-		basedata+= tab+depths[tid]
+		basedata+= tab+('N/A' if not tid in edgeload else edgeload[tid])
+		basedata+= tab+('N/A' if not tid in slevels else slevels[tid])
+		basedata+= tab+('N/A' if not tid in depths else depths[tid])
 		basedata+= tab+('N/A' if not tid in nplevels else nplevels[tid])
 		basedata+= tab+('N/A' if not tid in nprootids else nprootids[tid])
 		basedata+= tab+('N/A' if not tid in npdepths else npdepths[tid])
