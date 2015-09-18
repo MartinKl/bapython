@@ -9,7 +9,7 @@ if len(sys.argv)!=2:
 edgetypes = re.compile('C?OBJC|C?SUBJC|C?NEB|C?REL|C?OBJI|C?RES|CS')
 conclauseedges = re.compile('CNEB|COBJC|CSUBJC|CREL|CRES|CS')
 
-nppattern = re.compile('(COR)?C?VOK|(COR)?C?ZEIT|RES|(COR)?C?ATTR|(COR)?C?GRAD|(COR)?C?KOMP|(COR)?C?SUBJ|(COR)?C?OBJA|(COR)?C?OBJD|(COR)?C?PN|(COR)?C?PRED|(COR)?C?GMOD|(COR)?C?OBJG|(COR)?C?APP|(COR)?C?MOD|(COR)?CJ|(COR)?EXPL')
+nppattern = re.compile('(COR)?C?VOK|(COR)?C?ZEIT|RES|(COR)?C?ATTR|(COR)?C?GRAD|(COR)?C?SUBJ|(COR)?C?OBJA|(COR)?C?OBJD|(COR)?C?PN|(COR)?C?PRED|(COR)?C?GMOD|(COR)?C?OBJG|(COR)?C?APP|(COR)?C?MOD|(COR)?CJ|(COR)?EXPL')#took out |(COR)?C?KOMP
 nkpattern = re.compile('N.|PPER')
 
 ppconda = re.compile('(COR)?C?OBJP|(COR)?C?MOD|APP|C?PRED|C?PN|(COR)?X.*/') #import after this node, a PN-node musst follow! Otherwise we get too much crap
@@ -111,6 +111,15 @@ for node in funcs.keys():
 		roots.append(node)
 		slevels[node]='S'
 		depths[node]='0'
+	elif (func=='CS'):
+		domid=root.find(".//*[@depIDs='"+node+"'][@func='CS']").attrib['govIDs']
+		domdomid=root.find(".//*[@depIDs='"+domid+"'][@func='CS']").attrib['govIDs']
+		if (funcs[domid]=='KON' and tokens[domdomid]=='_'):
+			roots.append(node)
+			slevels[node]='S'
+			slevels[domid]='S'
+			depths[node]='0'	
+			depths[domid]='0'		
 	else:
 		slevels[node]=('S' if func!='N/A' else 'N/A')
 		depths[node]=('0' if func!='N/A' else 'N/A')		
