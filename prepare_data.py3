@@ -12,7 +12,10 @@ conclauseedges = re.compile('CNEB|COBJC|CSUBJC|CREL|CRES|CS')
 nppattern = re.compile('(COR)?C?VOK|(COR)?C?ZEIT|RES|(COR)?C?ATTR|(COR)?C?GRAD|(COR)?C?SUBJ|(COR)?C?OBJA|(COR)?C?OBJD|(COR)?C?PN|(COR)?C?PRED|(COR)?C?GMOD|(COR)?C?OBJG|(COR)?C?APP|(COR)?C?MOD|(COR)?CJ|(COR)?EXPL')#took out |(COR)?C?KOMP
 nkpattern = re.compile('N.|PPER|PRF|PIS|PDS|PPOSS|PWS')#PRELS bleibt draußen
 
-ppconda = re.compile('(COR)?C?OBJP|(COR)?C?MOD|APP|C?PRED|C?PN|(COR)?X.*/') #import after this node, a PN-node musst follow! Otherwise we get too much crap
+#ppconda = re.compile('(COR)?C?OBJP|(COR)?C?MOD|APP|C?PRED|C?PN|(COR)?X.*/') #import after this node, a PN-node musst follow! Otherwise we get too much crap
+pptagpattern = re.compile('APP(R?ART|O)')
+pnlabelpattern = re.compile('C?(CORX?)?C?PN')
+ppkonlabelpattern = re.compile('(C(CORX?)?PN)|KON|C?S') #everything else = corner cases
 
 def rec_eval_embedding(tokenid, parentlevel, depth, npsensitive):		
 	slevels[tokenid]= parentlevel
@@ -29,6 +32,8 @@ def rec_eval_embedding(tokenid, parentlevel, depth, npsensitive):
 			sensitive=0
 			rootnps.append(id)								
 			nprootids[node]=tokenid
+		if (pnlabelpattern.match(func)):#no elif!			
+			pproots.append(tokenid)
 		if (edgetypes.match(func)):			
 			rec_eval_embedding(id, func, depth+(0 if conclauseedges.match(func) else 1), sensitive)
 		else:
@@ -49,7 +54,16 @@ def rec_eval_nps(tokenid, gov, root_id, depth):
 		else:
 			rec_eval_nps(id, gov, root_id, depth)
 	
-	
+def rec_eval_pps(startid, func, ppgovtag, depth): #func is the function of the whole pp, highest priority has the embedded pp
+	ppdepths[startid]= str(depth)
+	ppfuncs[startid]= func
+	ppgovtags[startid]= ppgovtag
+	children = root.findall(".//*[@govIDs='"+startid+"']")
+	for child in children:
+		id = child.attrib['depIDs']		
+		newfunc = funcs[id]
+		newpp = (pptagpattern.match(postags[id]) and not ppkonlabelpattern.match(newfunc))
+		rec_eval_pps(id, (newfunc if newpp else func), (postags[startid] if newpp else ppgovtag), (depth+1 if newpp else depth))
 
 i=0
 file=sys.argv[1]
@@ -95,6 +109,7 @@ print('collecting nodes by function')
 ##collect roots
 roots=[]
 rootnps=[]
+pproots=[]
 
 slevels={}
 depths={}
@@ -102,7 +117,8 @@ npdepths={}
 nplevels={}
 nprootids={}
 edgeload={}
-pplevels={}
+ppgovtags={}
+ppfuncs={}
 ppdepths={}
 for node in funcs.keys():	
 	func=funcs[node]			
@@ -128,30 +144,37 @@ for node in funcs.keys():
 		#else:
 		
 		
-print('evaluating (embedded) clauses and collecting root-nps')
+print('evaluating (embedded) clauses and collecting root-nps and root-pps')
 
-kcount = 1
+count = 1
 l=len(roots)
 for rt in roots:
-	print('\tevaluating S-Node',kcount,'of',l)
-	kcount+=1
+	print('\tevaluating S-Node',count,'of',l)
+	count+=1
 	rec_eval_embedding(rt, 'S', 0, 1)
 
-#DEBUG
-#for rnp in rootnps:
-#	print(rnp,tokens[rnp],funcs[rnp])
-#exit()
-#END OF DEBUG
 print('evaluating NPs')
 
-npcount = 1
+count = 1
 l=len(rootnps)
 for np in rootnps:
-	print('\tevaluating root-np',npcount,'of',l,'(',np,')')
-	npcount+=1
+	print('\tevaluating root-np',count,'of',l,'(',np,')')
+	count+=1
 	rec_eval_nps(np, funcs[np], root.find(".//*[@depIDs='"+np+"']").attrib['govIDs'], 0)
 
-basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tedgeload\ts_parent\tdepth\tnp_root\tnp_root_id\tnp_depth'
+count = 1
+l=len(pproots)
+print('evaluating',len(pproots),'PPs')
+for pp in pproots:
+	if (not pp in ppfuncs):
+		print('\tevaluating pp',count,'of',l,'(',pp,')')				
+		govtag = postags[ govs[pp] ]
+		startfunc = funcs[pp]
+		con = startfunc[0]=='C' and not (startfunc[1:2]=='OR')
+		rec_eval_pps(pp, (startfunc if not con else funcs[govs[pp]]), (govtag if not con else postags[ govs[govs[pp]]]), 0)
+	count+=1
+
+basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tedgeload\ts_parent\tdepth\tpp_func\tpp_gov\tpp_depth\tnp_root\tnp_root_id\tnp_depth'
 nl = '\n'
 tab = '\t'
 
@@ -159,20 +182,24 @@ print('creating output')
 for sentence in root.iter(nstc+'sentence'):	
 	sid = 's'+sentence.attrib['tokenIDs'].split(' ')[0][1:]
 	for tid in sentence.attrib['tokenIDs'].split(' '):
-		basedata+= nl+sid
-		basedata+= tab+tid
-		basedata+= tab+tokens[tid]
-		basedata+= tab+('N/A' if not tid in lemmas else lemmas[tid])
-		basedata+= tab+('N/A' if not tid in postags else postags[tid])
-		basedata+= tab+govs[tid]
-		basedata+= tab+funcs[tid]
-		basedata+= tab+('N/A' if not tid in edgeload else edgeload[tid])
-		basedata+= tab+('N/A' if not tid in slevels else slevels[tid])
-		basedata+= tab+('N/A' if not tid in depths else depths[tid])
-		basedata+= tab+('N/A' if not tid in nplevels else nplevels[tid])
-		basedata+= tab+('N/A' if not tid in nprootids else nprootids[tid])
-		basedata+= tab+('N/A' if not tid in npdepths else npdepths[tid])
-		
+		if (tid in slevels or postags[tid][0]=='$' or tokens[tid]=='_'):
+			basedata+= nl+sid
+			basedata+= tab+tid
+			basedata+= tab+tokens[tid]
+			basedata+= tab+('N/A' if not tid in lemmas else lemmas[tid])
+			basedata+= tab+('N/A' if not tid in postags else postags[tid])
+			basedata+= tab+govs[tid]
+			basedata+= tab+funcs[tid]
+			basedata+= tab+('N/A' if not tid in edgeload else edgeload[tid])
+			basedata+= tab+('N/A' if not tid in slevels else slevels[tid])
+			basedata+= tab+('N/A' if not tid in depths else depths[tid])		
+			basedata+= tab+('N/A' if not tid in ppfuncs else ppfuncs[tid])
+			basedata+= tab+('N/A' if not tid in ppgovtags else ppgovtags[tid])
+			basedata+= tab+('N/A' if not tid in ppdepths else ppdepths[tid])		
+			basedata+= tab+('N/A' if not tid in nplevels else nplevels[tid])
+			basedata+= tab+('N/A' if not tid in nprootids else nprootids[tid])
+			basedata+= tab+('N/A' if not tid in npdepths else npdepths[tid])
+			
 
 print('done')
 
