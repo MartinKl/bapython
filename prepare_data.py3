@@ -17,7 +17,7 @@ pptagpattern = re.compile('APP(R?ART|O)')
 pnlabelpattern = re.compile('C?(CORX?)?C?PN')
 ppkonlabelpattern = re.compile('(C(CORX?)?PN)|KON|C?S') #everything else = corner cases
 
-modpattern = re.compile('(CORX?)?(G?MOD|ATTR)') #no c-mod anyhows!
+modpattern = re.compile('(CORX?)?(G?MOD|ATTR)')
 
 def rec_eval_embedding(tokenid, parentlevel, depth, npsensitive, modsensitive):		
 	slevels[tokenid]= parentlevel
@@ -55,8 +55,7 @@ def rec_eval_nps(tokenid, gov, root_id, depth):
 	for child in children:
 		id = child.attrib['depIDs']
 		func = funcs[id]
-		if (nppattern.match(func) and nkpattern.match(postags[id])):
-			
+		if (nppattern.match(func) and nkpattern.match(postags[id])):			
 			rec_eval_nps(id, func, tokenid, (depth if func[0]=='C' else depth+1))#errors with COR?
 		else:
 			rec_eval_nps(id, gov, root_id, depth)
@@ -79,8 +78,10 @@ def rec_eval_mods(startid, func, govtag, depth):
 	children = root.findall(".//*[@govIDs='"+startid+"']")
 	for child in children:
 		id= child.attrib['depIDs']
+		newfunc=funcs[id]
 		newmod= modpattern.match(funcs[id])
-		rec_eval_mods(id, (funcs[id] if newmod else func), (postags[startid] if newmod else govtag), (depth+1 if newmod else depth))
+		cmod= newfunc[0]='C' and newfunc[1:2]!='OR'
+		rec_eval_mods(id, (newfunc if newmod else (newfunc if cmod else func)), (postags[startid] if newmod else govtag), (depth+1 if newmod else depth))
 
 i=0
 file=sys.argv[1]
