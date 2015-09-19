@@ -80,7 +80,7 @@ def rec_eval_mods(startid, func, govtag, depth):
 	for child in children:
 		id= child.attrib['depIDs']
 		newmod= modpattern.match(funcs[id])
-		rec_eval_mods(id, (funcs[id] if newmod else func), (postags[id] if newmod else govtag), (depth+1 if newmod else depth))
+		rec_eval_mods(id, (funcs[id] if newmod else func), (postags[startid] if newmod else govtag), (depth+1 if newmod else depth))
 
 i=0
 file=sys.argv[1]
