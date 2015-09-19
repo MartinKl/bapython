@@ -17,11 +17,12 @@ pptagpattern = re.compile('APP(R?ART|O)')
 pnlabelpattern = re.compile('C?(CORX?)?C?PN')
 ppkonlabelpattern = re.compile('(C(CORX?)?PN)|KON|C?S') #everything else = corner cases
 
-modpattern = re.compile('(CORX?)?(G?MOD|ATTR)')
+modpattern = re.compile('(CORX?)?(G?MOD|ATTR|REL)')
 
-def rec_eval_embedding(tokenid, parentlevel, depth, npsensitive, modsensitive):		
+def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modsensitive):		
 	slevels[tokenid]= parentlevel
 	depths[tokenid]= str(depth)
+	absdepths[tokenid]= str(absdepth+1)
 	if (tokenid not in nprootids and nkpattern.match(postags[tokenid])):
 		nprootids[tokenid]= 'N/A'	
 	children = root.findall(".//*[@govIDs='"+tokenid+"']")
@@ -31,6 +32,7 @@ def rec_eval_embedding(tokenid, parentlevel, depth, npsensitive, modsensitive):
 		ms = modsensitive
 		id = child.attrib['depIDs']
 		func=funcs[id]			
+		coord= func=='KON' of (func[0]=='C' and func[1:2]!='OR')
 		if (sensitive and nppattern.match(func) and nkpattern.match(postags[id])):
 			sensitive=0
 			rootnps.append(id)								
@@ -42,26 +44,29 @@ def rec_eval_embedding(tokenid, parentlevel, depth, npsensitive, modsensitive):
 			modgovtags[id] = postags[tokenid]
 			ms= 0
 		if (edgetypes.match(func)):			
-			rec_eval_embedding(id, func, depth+(0 if conclauseedges.match(func) else 1), sensitive, ms)
+			rec_eval_embedding(id, func, depth+(0 if conclauseedges.match(func) else 1), (absdepth if coord else absdepth+1), sensitive, ms)
 		else:
-			rec_eval_embedding(id, parentlevel, depth, sensitive, ms)
+			rec_eval_embedding(id, parentlevel, depth, (absdepth if coord else absdepth+1), sensitive, ms)
 		
 
-def rec_eval_nps(tokenid, gov, root_id, depth):
+def rec_eval_nps(tokenid, gov, root_id, depth, absdepth):
 	npdepths[tokenid]= str(depth)
+	npabsdepths[tokenid]= str(absdepth)
 	nplevels[tokenid]= gov
 	nprootids[tokenid]= root_id
 	children = root.findall(".//*[@govIDs='"+tokenid+"']")
 	for child in children:
 		id = child.attrib['depIDs']
 		func = funcs[id]
+		coord= func=='KON' of (func[0]=='C' and func[1:2]!='OR')
 		if (nppattern.match(func) and nkpattern.match(postags[id])):			
-			rec_eval_nps(id, func, tokenid, (depth if func[0]=='C' else depth+1))#errors with COR?
+			rec_eval_nps(id, func, tokenid, (depth if coord else depth+1), (absdepth if coord else absdepths[id]))
 		else:
-			rec_eval_nps(id, gov, root_id, depth)
+			rec_eval_nps(id, gov, root_id, depth, absdepth)
 	
-def rec_eval_pps(startid, func, ppgovtag, depth): #func is the function of the whole pp, highest priority has the embedded pp
+def rec_eval_pps(startid, func, ppgovtag, depth, absdepth): #func is the function of the whole pp, highest priority has the embedded pp
 	ppdepths[startid]= str(depth)
+	ppabsdepths[startid]= str(absdepth)
 	ppfuncs[startid]= func
 	ppgovtags[startid]= ppgovtag
 	children = root.findall(".//*[@govIDs='"+startid+"']")
@@ -69,10 +74,11 @@ def rec_eval_pps(startid, func, ppgovtag, depth): #func is the function of the w
 		id = child.attrib['depIDs']		
 		newfunc = funcs[id]
 		newpp = (pptagpattern.match(postags[id]) and not ppkonlabelpattern.match(newfunc))
-		rec_eval_pps(id, (newfunc if newpp else func), (postags[startid] if newpp else ppgovtag), (depth+1 if newpp else depth))
+		rec_eval_pps(id, (newfunc if newpp else func), (postags[startid] if newpp else ppgovtag), (depth+1 if newpp else depth), (absdepths[id] if newpp else absdepth))
 		
-def rec_eval_mods(startid, func, govtag, depth):
+def rec_eval_mods(startid, func, govtag, depth, absdepth):
 	moddepths[startid]= str(depth)
+	modabsdepths[startid]= str(absdepth)
 	modfuncs[startid]= func
 	modgovtags[startid]= govtag
 	children = root.findall(".//*[@govIDs='"+startid+"']")
@@ -80,8 +86,8 @@ def rec_eval_mods(startid, func, govtag, depth):
 		id= child.attrib['depIDs']
 		newfunc=funcs[id]
 		newmod= modpattern.match(funcs[id])
-		cmod= newfunc[0]='C' and newfunc[1:2]!='OR'
-		rec_eval_mods(id, (newfunc if newmod else (newfunc if cmod else func)), (postags[startid] if newmod else govtag), (depth+1 if newmod else depth))
+		cmod= newfunc[0]=='C' and newfunc[1:2]!='OR'
+		rec_eval_mods(id, (newfunc if newmod else (newfunc if cmod else func)), (postags[startid] if newmod else govtag), (depth+1 if newmod else depth), (absdepths[id] if newmod else absdepth))
 
 i=0
 file=sys.argv[1]
@@ -132,16 +138,20 @@ rootmods=[]
 
 slevels={}
 depths={}
+absdepths={}
 npdepths={}
+npabsdepths={}
 nplevels={}
 nprootids={}
 edgeload={}
 ppgovtags={}
 ppfuncs={}
 ppdepths={}
+ppabsdepths={}
 modgovtags={}
 modfuncs={}
 moddepths={}
+modabsdepths={}
 for node in funcs.keys():	
 	func=funcs[node]			
 	if (func=='S'):
@@ -173,7 +183,7 @@ l=len(roots)
 for rt in roots:
 	print('\tevaluating S-Node',count,'of',l)
 	count+=1
-	rec_eval_embedding(rt, 'S', 0, 1, 1)
+	rec_eval_embedding(rt, 'S', 0, 0, 1, 1)
 
 print('evaluating NPs')
 
@@ -182,18 +192,18 @@ l=len(rootnps)
 for np in rootnps:
 	print('\tevaluating root-np',count,'of',l,'(',np,')')
 	count+=1
-	rec_eval_nps(np, funcs[np], root.find(".//*[@depIDs='"+np+"']").attrib['govIDs'], 0)
+	rec_eval_nps(np, funcs[np], root.find(".//*[@depIDs='"+np+"']").attrib['govIDs'], 0, absdepths[np])
 
 count = 1
 l=len(pproots)
 print('evaluating',len(pproots),'PPs')
-for pp in pproots:#this is buggy ... it assumes that the first element in the list is not already embedded which cannot be assured with python
+for pp in pproots:#this is buggy ... it assumes that the first element in the list is not already embedded which cannot be assured with python (maybe it's not buggy, but redundant, since it will overwrite things already done... check it
 	if (not pp in ppfuncs):
 		print('\tevaluating pp',count,'of',l,'(',pp,')')				
 		govtag = postags[ govs[pp] ]
 		startfunc = funcs[pp]
 		con = startfunc[0]=='C' and not (startfunc[1:2]=='OR')
-		rec_eval_pps(pp, (startfunc if not con else funcs[govs[pp]]), (govtag if not con else postags[ govs[govs[pp]]]), 0)
+		rec_eval_pps(pp, (startfunc if not con else funcs[govs[pp]]), (govtag if not con else postags[ govs[govs[pp]]]), 0, absdepths[pp])
 	count+=1
 	
 count = 1
@@ -202,9 +212,9 @@ print('evaluating',len(rootmods),'modifiers')
 for mod in rootmods:
 	print('\tevaluating modifier',count,'of',l,'(',mod,')')
 	count+= 1
-	rec_eval_mods(mod, funcs[mod], postags[mod], 0)
+	rec_eval_mods(mod, funcs[mod], postags[govs[mod]], 0, absdepths[mod])
 
-basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tedgeload\ts_parent\tdepth\tpp_func\tpp_gov\tpp_depth\tnp_root\tnp_root_id\tnp_depth\tmod_func\tmod_govtag\t_mod_depth'
+basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tabs_depth\tedgeload\ts_parent\tdepth\tpp_func\tpp_gov\tpp_depth\tpp_absdepth\tnp_root\tnp_root_id\tnp_depth\tnp_absdepth\tmod_func\tmod_govtag\t_mod_depth\tmod_absdepth'
 nl = '\n'
 tab = '\t'
 
@@ -220,19 +230,22 @@ for sentence in root.iter(nstc+'sentence'):
 			basedata+= tab+('N/A' if not tid in postags else postags[tid])
 			basedata+= tab+govs[tid]
 			basedata+= tab+funcs[tid]
+			basedata+= tab+('N/A' if not tid in absdepths else absdepths[tid])
 			basedata+= tab+('N/A' if not tid in edgeload else edgeload[tid])
 			basedata+= tab+('N/A' if not tid in slevels else slevels[tid])
 			basedata+= tab+('N/A' if not tid in depths else depths[tid])		
 			basedata+= tab+('N/A' if not tid in ppfuncs else ppfuncs[tid])
 			basedata+= tab+('N/A' if not tid in ppgovtags else ppgovtags[tid])
 			basedata+= tab+('N/A' if not tid in ppdepths else ppdepths[tid])		
+			basedata+= tab+('N/A' if not tid in ppabsdepths else ppabsdepths[tid])
 			basedata+= tab+('N/A' if not tid in nplevels else nplevels[tid])
 			basedata+= tab+('N/A' if not tid in nprootids else nprootids[tid])
-			basedata+= tab+('N/A' if not tid in npdepths else npdepths[tid])
-			
+			basedata+= tab+('N/A' if not tid in npdepths else npdepths[tid])			
+			basedata+= tab+('N/A' if not tid in npabsdepths else npabsdepths[tid])
 			basedata+= tab+('N/A' if not tid in modfuncs else modfuncs[tid])
 			basedata+= tab+('N/A' if not tid in modgovtags else modgovtags[tid])
 			basedata+= tab+('N/A' if not tid in moddepths else moddepths[tid])
+			basedata+= tab+('N/A' if not tid in moddepths else modabsdepths[tid])
 			
 
 print('done')
