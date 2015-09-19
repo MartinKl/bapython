@@ -19,7 +19,7 @@ ppkonlabelpattern = re.compile('(C(CORX?)?PN)|KON|C?S') #everything else = corne
 
 modpattern = re.compile('(CORX?)?(G?MOD|ATTR|REL)')
 
-def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modsensitive):		
+def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modsensitive):			
 	slevels[tokenid]= parentlevel
 	depths[tokenid]= str(depth)
 	absdepths[tokenid]= str(absdepth+1)
@@ -214,7 +214,7 @@ for mod in rootmods:
 	count+= 1
 	rec_eval_mods(mod, funcs[mod], postags[govs[mod]], 0, absdepths[mod])
 
-basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tabs_depth\tedgeload\ts_parent\tdepth\tpp_func\tpp_gov\tpp_depth\tpp_absdepth\tnp_root\tnp_root_id\tnp_depth\tnp_absdepth\tmod_func\tmod_govtag\t_mod_depth\tmod_absdepth'
+basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tabs_depth\tedgeload\ts_parent\tdepth\tpp_func\tpp_gov\tpp_depth\tpp_absdepth\tnp_root\tnp_root_id\tnp_depth\tnp_absdepth\tmod_func\tmod_govtag\tmod_depth\tmod_absdepth'
 nl = '\n'
 tab = '\t'
 
@@ -222,8 +222,8 @@ print('creating output')
 for sentence in root.iter(nstc+'sentence'):	
 	sid = 's'+sentence.attrib['tokenIDs'].split(' ')[0][1:]
 	for tid in sentence.attrib['tokenIDs'].split(' '):
-		if (tid in slevels or postags[tid][0]=='$'): #"_"-Elements are right now not in the exported data
-			basedata+= nl+sid
+		if (tid in slevels or (tokens[tid]=='_') or (tid in postags and postags[tid][0]=='$')): #"_"-Elements are right now not in the exported data
+			basedata+= nl+sid[1:]#the s blocks a lot
 			basedata+= tab+tid
 			basedata+= tab+tokens[tid]
 			basedata+= tab+('N/A' if not tid in lemmas else lemmas[tid])
@@ -251,7 +251,8 @@ for sentence in root.iter(nstc+'sentence'):
 print('done')
 
 #write a tsv
-f = open(file[0:file.rfind('.')]+'_basedata.tsv','w')
+rslash= file[0:file.rfind('/')].rfind('/')
+f = open(file[0:rslash]+'/tsv/'+file[file.rfind('/')+1:file.rfind('.')]+'_basedata.tsv','w')
 f.write(basedata)
 f.close()			
 
