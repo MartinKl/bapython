@@ -32,7 +32,7 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 		ms = modsensitive
 		id = child.attrib['depIDs']
 		func=funcs[id]			
-		coord= func=='KON' of (func[0]=='C' and func[1:2]!='OR')
+		coord= func=='KON' or (func[0]=='C' and func[1:2]!='OR')
 		if (sensitive and nppattern.match(func) and nkpattern.match(postags[id])):
 			sensitive=0
 			rootnps.append(id)								
@@ -58,7 +58,7 @@ def rec_eval_nps(tokenid, gov, root_id, depth, absdepth):
 	for child in children:
 		id = child.attrib['depIDs']
 		func = funcs[id]
-		coord= func=='KON' of (func[0]=='C' and func[1:2]!='OR')
+		coord= func=='KON' or (func[0]=='C' and func[1:2]!='OR')
 		if (nppattern.match(func) and nkpattern.match(postags[id])):			
 			rec_eval_nps(id, func, tokenid, (depth if coord else depth+1), (absdepth if coord else absdepths[id]))
 		else:
