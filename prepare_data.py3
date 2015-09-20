@@ -25,7 +25,7 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 	if (not parpattern.match(funcs[tokenid])):
 		slevels[tokenid]= parentlevel
 		depths[tokenid]= str(depth)
-		absdepths[tokenid]= str(absdepth+1)
+		absdepths[tokenid]= str(absdepth)
 		if (tokenid not in nprootids and nkpattern.match(postags[tokenid])):
 			nprootids[tokenid]= 'N/A'	
 		children = root.findall(".//*[@govIDs='"+tokenid+"']")
