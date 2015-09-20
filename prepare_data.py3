@@ -84,10 +84,10 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 				rootmods.append(id)
 				modgovtags[id] = postags[tokenid]
 				ms= 0
-			if (edgetypes.match(func)):	
-				clse+=1
+			if (edgetypes.match(func)):								
 				if (not coord):
 					mdfs-=1
+					clse+=1
 				rec_eval_embedding(id, func, depth+(0 if conclauseedges.match(func) else 1), (absdepth if coord else absdepth+1), sensitive, ms)
 			else:
 				rec_eval_embedding(id, parentlevel, depth, (absdepth if coord else absdepth+1), sensitive, ms)
@@ -102,11 +102,23 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 		coredges[tokenid]= str(corx)
 		#TEST:
 		if (subj+args+mods+mdfs+clse+cooe+auxe+prte!=len(children)):
-			print('error with edgeload splitting')
+			print('error with edgeload splitting',tokenid,':')
+			print(' ',str(subj),'subj')
+			print('+',str(args),'args')
+			print('+',str(mods),'mods')
+			print('+',str(mdfs),'mdfs')
+			print('+',str(clse),'clse')
+			print('+',str(cooe),'cooe')
+			print('+',str(auxe),'auxe')
+			print('+',str(prte),'prte')
+			print('----')
+			print('?',edgeload[tokenid])
 			exit()
 	else:
 		e = int(edgeload[govs[tokenid]])
 		edgeload[govs[tokenid]]= str(e-1)
+		m = int(mdfedges[govs[tokenid]])
+		mdfedges[govs[tokenid]] = str(m-1)
 		
 
 def rec_eval_nps(tokenid, gov, root_id, depth, absdepth):
