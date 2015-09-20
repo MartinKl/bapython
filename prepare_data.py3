@@ -19,75 +19,81 @@ ppkonlabelpattern = re.compile('(C(CORX?)?PN)|KON|C?S') #everything else = corne
 
 modpattern = re.compile('(CORX?)?(G?MOD|ATTR|REL)')
 
-def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modsensitive):			
-	slevels[tokenid]= parentlevel
-	depths[tokenid]= str(depth)
-	absdepths[tokenid]= str(absdepth+1)
-	if (tokenid not in nprootids and nkpattern.match(postags[tokenid])):
-		nprootids[tokenid]= 'N/A'	
-	children = root.findall(".//*[@govIDs='"+tokenid+"']")
-	edgeload[tokenid]= str(len(children))	
-	for child in children:				
-		sensitive=npsensitive
-		ms = modsensitive
-		id = child.attrib['depIDs']
-		func=funcs[id]			
-		coord= func=='KON' or (func[0]=='C' and func[1:2]!='OR')
-		if (sensitive and nppattern.match(func) and nkpattern.match(postags[id])):
-			sensitive=0
-			rootnps.append(id)								
-			nprootids[node]=tokenid
-		if (pnlabelpattern.match(func)):#no elif!			
-			pproots.append(tokenid)
-		elif (ms and modpattern.match(func)):
-			rootmods.append(id)
-			modgovtags[id] = postags[tokenid]
-			ms= 0
-		if (edgetypes.match(func)):			
-			rec_eval_embedding(id, func, depth+(0 if conclauseedges.match(func) else 1), (absdepth if coord else absdepth+1), sensitive, ms)
-		else:
-			rec_eval_embedding(id, parentlevel, depth, (absdepth if coord else absdepth+1), sensitive, ms)
+parpattern = re.compile('C?(CORX?)PAR')
+
+def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modsensitive):	
+	if (not parpattern.match(funcs[tokenid])):
+		slevels[tokenid]= parentlevel
+		depths[tokenid]= str(depth)
+		absdepths[tokenid]= str(absdepth+1)
+		if (tokenid not in nprootids and nkpattern.match(postags[tokenid])):
+			nprootids[tokenid]= 'N/A'	
+		children = root.findall(".//*[@govIDs='"+tokenid+"']")
+		edgeload[tokenid]= str(len(children))	
+		for child in children:				
+			sensitive=npsensitive
+			ms = modsensitive
+			id = child.attrib['depIDs']
+			func=funcs[id]			
+			coord= func=='KON' or (func[0]=='C' and func[1:2]!='OR')
+			if (sensitive and nppattern.match(func) and nkpattern.match(postags[id])):
+				sensitive=0
+				rootnps.append(id)								
+				nprootids[node]=tokenid
+			if (pnlabelpattern.match(func)):#no elif!			
+				pproots.append(tokenid)
+			elif (ms and modpattern.match(func)):
+				rootmods.append(id)
+				modgovtags[id] = postags[tokenid]
+				ms= 0
+			if (edgetypes.match(func)):			
+				rec_eval_embedding(id, func, depth+(0 if conclauseedges.match(func) else 1), (absdepth if coord else absdepth+1), sensitive, ms)
+			else:
+				rec_eval_embedding(id, parentlevel, depth, (absdepth if coord else absdepth+1), sensitive, ms)
 		
 
 def rec_eval_nps(tokenid, gov, root_id, depth, absdepth):
-	npdepths[tokenid]= str(depth)
-	npabsdepths[tokenid]= str(absdepth)
-	nplevels[tokenid]= gov
-	nprootids[tokenid]= root_id
-	children = root.findall(".//*[@govIDs='"+tokenid+"']")
-	for child in children:
-		id = child.attrib['depIDs']
-		func = funcs[id]
-		coord= func=='KON' or (func[0]=='C' and func[1:2]!='OR')
-		if (nppattern.match(func) and nkpattern.match(postags[id])):			
-			rec_eval_nps(id, func, tokenid, (depth if coord else depth+1), (absdepth if coord else absdepths[id]))
-		else:
-			rec_eval_nps(id, gov, root_id, depth, absdepth)
+	if (not parpattern.match(funcs[tokenid])):
+		npdepths[tokenid]= str(depth)
+		npabsdepths[tokenid]= str(absdepth)
+		nplevels[tokenid]= gov
+		nprootids[tokenid]= root_id
+		children = root.findall(".//*[@govIDs='"+tokenid+"']")
+		for child in children:
+			id = child.attrib['depIDs']
+			func = funcs[id]
+			coord= func=='KON' or (func[0]=='C' and func[1:2]!='OR')
+			if (nppattern.match(func) and nkpattern.match(postags[id])):			
+				rec_eval_nps(id, func, tokenid, (depth if coord else depth+1), (absdepth if coord else absdepths[id]))
+			else:
+				rec_eval_nps(id, gov, root_id, depth, absdepth)
 	
 def rec_eval_pps(startid, func, ppgovtag, depth, absdepth): #func is the function of the whole pp, highest priority has the embedded pp
-	ppdepths[startid]= str(depth)
-	ppabsdepths[startid]= str(absdepth)
-	ppfuncs[startid]= func
-	ppgovtags[startid]= ppgovtag
-	children = root.findall(".//*[@govIDs='"+startid+"']")
-	for child in children:
-		id = child.attrib['depIDs']		
-		newfunc = funcs[id]
-		newpp = (pptagpattern.match(postags[id]) and not ppkonlabelpattern.match(newfunc))
-		rec_eval_pps(id, (newfunc if newpp else func), (postags[startid] if newpp else ppgovtag), (depth+1 if newpp else depth), (absdepths[id] if newpp else absdepth))
+	if (not parpattern.match(funcs[startid])):
+		ppdepths[startid]= str(depth)
+		ppabsdepths[startid]= str(absdepth)
+		ppfuncs[startid]= func
+		ppgovtags[startid]= ppgovtag
+		children = root.findall(".//*[@govIDs='"+startid+"']")
+		for child in children:
+			id = child.attrib['depIDs']		
+			newfunc = funcs[id]
+			newpp = (pptagpattern.match(postags[id]) and not ppkonlabelpattern.match(newfunc))
+			rec_eval_pps(id, (newfunc if newpp else func), (postags[startid] if newpp else ppgovtag), (depth+1 if newpp else depth), (absdepths[id] if newpp else absdepth))
 		
 def rec_eval_mods(startid, func, govtag, depth, absdepth):
-	moddepths[startid]= str(depth)
-	modabsdepths[startid]= str(absdepth)
-	modfuncs[startid]= func
-	modgovtags[startid]= govtag
-	children = root.findall(".//*[@govIDs='"+startid+"']")
-	for child in children:
-		id= child.attrib['depIDs']
-		newfunc=funcs[id]
-		newmod= modpattern.match(funcs[id])
-		cmod= newfunc[0]=='C' and newfunc[1:2]!='OR'
-		rec_eval_mods(id, (newfunc if newmod else (newfunc if cmod else func)), (postags[startid] if newmod else govtag), (depth+1 if newmod else depth), (absdepths[id] if newmod else absdepth))
+	if (not parpattern.match(funcs[tokenid])):
+		moddepths[startid]= str(depth)
+		modabsdepths[startid]= str(absdepth)
+		modfuncs[startid]= func
+		modgovtags[startid]= govtag
+		children = root.findall(".//*[@govIDs='"+startid+"']")
+		for child in children:
+			id= child.attrib['depIDs']
+			newfunc=funcs[id]
+			newmod= modpattern.match(funcs[id])
+			cmod= newfunc[0]=='C' and newfunc[1:2]!='OR'
+			rec_eval_mods(id, (newfunc if newmod else (newfunc if cmod else func)), (postags[startid] if newmod else govtag), (depth+1 if newmod else depth), (absdepths[id] if newmod else absdepth))
 
 i=0
 file=sys.argv[1]
