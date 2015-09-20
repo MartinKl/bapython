@@ -19,7 +19,7 @@ ppkonlabelpattern = re.compile('(C(CORX?)?PN)|KON|C?S') #everything else = corne
 
 modpattern = re.compile('(CORX?)?(G?MOD|ATTR|REL)')
 
-parpattern = re.compile('C?(CORX?)?PAR')
+parpattern = re.compile('C?(CORX?)?PAR[^T]')
 
 def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modsensitive):	
 	if (not parpattern.match(funcs[tokenid])):
