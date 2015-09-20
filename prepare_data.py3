@@ -6,8 +6,8 @@ import sys, os, xml.etree.ElementTree as ET, re
 if len(sys.argv)!=2:
     exit()
 
-edgetypes = re.compile('C?OBJC|C?SUBJC|C?NEB|C?REL|C?OBJI|CS')
-conclauseedges = re.compile('CNEB|COBJC|CSUBJC|CREL|CRES|CS')
+edgetypes = re.compile('C?(CORX?)?OBJC|C?(CORX?)?SUBJC|C?(CORX?)?NEB|C?(CORX?)?REL|C?(CORX?)?OBJI|C(CORX?)?S')
+conclauseedges = re.compile('C(CORX?)?NEB|C(CORX?)?OBJC|C(CORX?)?SUBJC|C(CORX?)?REL|C(CORX?)?RES|C(CORX?)?OBJI|C(CORX?)?S')
 
 nppattern = re.compile('(COR)?C?VOK|(COR)?C?ZEIT|RES|(COR)?C?ATTR|(COR)?C?GRAD|(COR)?C?SUBJ|(COR)?C?OBJA|(COR)?C?OBJD|(COR)?C?PN|(COR)?C?PRED|(COR)?C?GMOD|(COR)?C?OBJG|(COR)?C?APP|(COR)?C?MOD|(COR)?CJ|(COR)?EXPL')#took out |(COR)?C?KOMP
 nkpattern = re.compile('N.|PPER|PRF|PIS|PDS|PPOSS|PWS')#PRELS bleibt draußen
@@ -17,7 +17,13 @@ pptagpattern = re.compile('APP(R?ART|O)')
 pnlabelpattern = re.compile('C?(CORX?)?C?PN')
 ppkonlabelpattern = re.compile('(C(CORX?)?PN)|KON|C?S') #everything else = corner cases
 
-modpattern = re.compile('(CORX?)?(G?MOD|ATTR|REL)')
+modpattern = re.compile('(CORX?)?(G?MOD|ATTR|REL)')#we leave appositions out
+
+argpattern = re.compile('(CORX?)?(OBJ(A|D|G|P)|SUBJ|PRED)')
+
+mdpattern = re.compile('(CORX?)?(G?MOD|ATTR)')
+
+prtpattern = re.compile('(CORX?)?(AVZ|PART)')
 
 parpattern = re.compile('C?(CORX?)?PAR[^T]')
 
@@ -29,13 +35,39 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 		if (tokenid not in nprootids and nkpattern.match(postags[tokenid])):
 			nprootids[tokenid]= 'N/A'	
 		children = root.findall(".//*[@govIDs='"+tokenid+"']")
-		edgeload[tokenid]= str(len(children))	
+		edgeload[tokenid]= str(len(children))
+		args=0#
+		mods=0#
+		mdfs=0#rest
+		clse=0#
+		cooe=0#
+		auxe=0#	
+		prte=0#
+		corx=0#
 		for child in children:				
 			sensitive=npsensitive
 			ms = modsensitive
 			id = child.attrib['depIDs']
 			func=funcs[id]			
-			coord= func=='KON' or (func[0]=='C' and func[1:2]!='OR')
+			coord= func=='KON' or (func[0]=='C' and func[1:3]!='OR')
+			mdfs+=1
+			if (argpattern.match(func)):
+				args+=1
+				mdfs-=1
+			elif (mdpattern.match(func)):
+				mods+=1
+				mdfs-=1
+			elif (coord):
+				cooe+=1
+				mdfs-=1
+			elif (func=='AUX'):
+				auxe+=1	
+				mdfs-=1
+			elif (prtpattern.match(func)):
+				prte+=1
+				mdfs-=1
+			if (func[0:3]=='COR'):
+				corx+=1
 			if (sensitive and nppattern.match(func) and nkpattern.match(postags[id])):
 				sensitive=0
 				rootnps.append(id)								
@@ -46,10 +78,27 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 				rootmods.append(id)
 				modgovtags[id] = postags[tokenid]
 				ms= 0
-			if (edgetypes.match(func)):			
+			if (edgetypes.match(func)):	
+				clse+=1
+				mdfs-=1
 				rec_eval_embedding(id, func, depth+(0 if conclauseedges.match(func) else 1), (absdepth if coord else absdepth+1), sensitive, ms)
 			else:
 				rec_eval_embedding(id, parentlevel, depth, (absdepth if coord else absdepth+1), sensitive, ms)
+		argedges[tokenid]= str(args)
+		modedges[tokenid]= str(mods)
+		mdfedges[tokenid]= str(mdfs)
+		clsedges[tokenid]= str(clse)
+		crdedges[tokenid]= str(cooe)
+		auxedges[tokenid]= str(auxe)
+		prtedges[tokenid]= str(prte)
+		coredges[tokenid]= str(corx)
+		#TEST:
+		if (args+mods+mdfs+clse+cooe+auxe+prte!=len(children)):
+			print('error with edgeload splitting')
+			exit()
+	else:
+		e = int(edgeload[govs[tokenid]])
+		edgeload[govs[tokenid]]= str(e-1)
 		
 
 def rec_eval_nps(tokenid, gov, root_id, depth, absdepth):
@@ -62,7 +111,7 @@ def rec_eval_nps(tokenid, gov, root_id, depth, absdepth):
 		for child in children:
 			id = child.attrib['depIDs']
 			func = funcs[id]
-			coord= func=='KON' or (func[0]=='C' and func[1:2]!='OR')
+			coord= func=='KON' or (func[0]=='C' and func[1:3]!='OR')
 			if (nppattern.match(func) and nkpattern.match(postags[id])):			
 				rec_eval_nps(id, func, tokenid, (depth if coord else depth+1), (absdepth if coord else absdepths[id]))
 			else:
@@ -92,7 +141,7 @@ def rec_eval_mods(startid, func, govtag, depth, absdepth):
 			id= child.attrib['depIDs']
 			newfunc=funcs[id]
 			newmod= modpattern.match(funcs[id])
-			cmod= newfunc[0]=='C' and newfunc[1:2]!='OR'
+			cmod= newfunc[0]=='C' and newfunc[1:3]!='OR'
 			rec_eval_mods(id, (newfunc if newmod else (newfunc if cmod else func)), (postags[startid] if newmod else govtag), (depth+1 if newmod else depth), (absdepths[id] if newmod else absdepth))
 
 i=0
@@ -150,6 +199,14 @@ npabsdepths={}
 nplevels={}
 nprootids={}
 edgeload={}
+argedges={}
+modedges={}
+mdfedges={}
+clsedges={}
+crdedges={}
+auxedges={}
+prtedges={}
+coredges={}
 ppgovtags={}
 ppfuncs={}
 ppdepths={}
@@ -208,7 +265,7 @@ for pp in pproots:#this is buggy ... it assumes that the first element in the li
 		print('\tevaluating pp',count,'of',l,'(',pp,')')				
 		govtag = postags[ govs[pp] ]
 		startfunc = funcs[pp]
-		con = startfunc[0]=='C' and not (startfunc[1:2]=='OR')
+		con = startfunc[0]=='C' and not (startfunc[1:3]=='OR')
 		rec_eval_pps(pp, (startfunc if not con else funcs[govs[pp]]), (govtag if not con else postags[ govs[govs[pp]]]), 0, absdepths[pp])
 	count+=1
 	
@@ -220,7 +277,7 @@ for mod in rootmods:
 	count+= 1
 	rec_eval_mods(mod, funcs[mod], postags[govs[mod]], 0, absdepths[mod])
 
-basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tabs_depth\tedgeload\ts_parent\tdepth\tpp_func\tpp_gov\tpp_depth\tpp_absdepth\tnp_root\tnp_root_id\tnp_depth\tnp_absdepth\tmod_func\tmod_govtag\tmod_depth\tmod_absdepth'
+basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tabs_depth\tedgeload\targ_edges\tmod_edges\tmdf_edges\tclause_edges\tcoord_edges\taux_edges\tpart_edges\tcorrections\ts_parent\tdepth\tpp_func\tpp_gov\tpp_depth\tpp_absdepth\tnp_root\tnp_root_id\tnp_depth\tnp_absdepth\tmod_func\tmod_govtag\tmod_depth\tmod_absdepth'
 nl = '\n'
 tab = '\t'
 
@@ -237,8 +294,16 @@ for sentence in root.iter(nstc+'sentence'):
 			basedata+= tab+govs[tid]
 			basedata+= tab+funcs[tid]
 			basedata+= tab+('N/A' if not tid in absdepths else absdepths[tid])
-			basedata+= tab+('N/A' if not tid in edgeload else edgeload[tid])
-			basedata+= tab+('N/A' if not tid in slevels else slevels[tid])
+			basedata+= tab+('N/A' if not tid in edgeload else edgeload[tid])			
+			basedata+= tab+('N/A' if not tid in argedges else argedges[tid])
+			basedata+= tab+('N/A' if not tid in modedges else modedges[tid])
+			basedata+= tab+('N/A' if not tid in mdfedges else mdfedges[tid])
+			basedata+= tab+('N/A' if not tid in clsedges else clsedges[tid])
+			basedata+= tab+('N/A' if not tid in crdedges else crdedges[tid])
+			basedata+= tab+('N/A' if not tid in auxedges else auxedges[tid])
+			basedata+= tab+('N/A' if not tid in prtedges else prtedges[tid])
+			basedata+= tab+('N/A' if not tid in coredges else coredges[tid])			
+			basedata+= tab+('N/A' if not tid in slevels else slevels[tid])			
 			basedata+= tab+('N/A' if not tid in depths else depths[tid])		
 			basedata+= tab+('N/A' if not tid in ppfuncs else ppfuncs[tid])
 			basedata+= tab+('N/A' if not tid in ppgovtags else ppgovtags[tid])
