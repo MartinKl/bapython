@@ -19,7 +19,7 @@ ppkonlabelpattern = re.compile('(C(CORX?)?PN)|KON|C?S') #everything else = corne
 
 modpattern = re.compile('(CORX?)?(G?MOD|ATTR|REL)')#we leave appositions out
 
-argpattern = re.compile('(CORX?)?(OBJ(A|D|G|P)|PRED)')
+argpattern = re.compile('(CORX?)?(OBJ(A|D|G|P)|PRED|PN)')
 
 sbjpattern = re.compile('(CORX?)?SUBJ')
 
@@ -41,12 +41,14 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 		subj=0
 		args=0#
 		mods=0#
+		dete=0
 		mdfs=0#rest
 		clse=0#
 		cooe=0#
 		auxe=0#	
 		prte=0#
 		corx=0#
+		descs=len(children)
 		for child in children:				
 			sensitive=npsensitive
 			ms = modsensitive
@@ -63,9 +65,13 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 			elif (mdpattern.match(func)):
 				mods+=1
 				mdfs-=1
+			elif (func=='DET'):
+				dete+=1
+				mdfs-=1
 			elif (coord):
 				cooe+=1
 				mdfs-=1
+				descs-=1 #coordinating nodes do not count as descendant
 			elif (func=='AUX'):
 				auxe+=1	
 				mdfs-=1
@@ -88,9 +94,10 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 				if (not coord):
 					mdfs-=1
 					clse+=1
-				rec_eval_embedding(id, func, depth+(0 if conclauseedges.match(func) else 1), (absdepth if coord else absdepth+1), sensitive, ms)
+				descs+=rec_eval_embedding(id, func, depth+(0 if conclauseedges.match(func) else 1), (absdepth if coord else absdepth+1), sensitive, ms)
 			else:
-				rec_eval_embedding(id, parentlevel, depth, (absdepth if coord else absdepth+1), sensitive, ms)
+				descs+=rec_eval_embedding(id, parentlevel, depth, (absdepth if coord else absdepth+1), sensitive, ms)
+				
 		sbjedges[tokenid]= str(subj)
 		argedges[tokenid]= str(args)
 		modedges[tokenid]= str(mods)
@@ -100,8 +107,9 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 		auxedges[tokenid]= str(auxe)
 		prtedges[tokenid]= str(prte)
 		coredges[tokenid]= str(corx)
+		detedges[tokenid]= str(dete)
 		#TEST:
-		if (subj+args+mods+mdfs+clse+cooe+auxe+prte!=len(children)):
+		if (subj+dete+args+mods+mdfs+clse+cooe+auxe+prte!=len(children)):
 			print('error with edgeload splitting',tokenid,':')
 			print(' ',str(subj),'subj')
 			print('+',str(args),'args')
@@ -111,14 +119,18 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 			print('+',str(cooe),'cooe')
 			print('+',str(auxe),'auxe')
 			print('+',str(prte),'prte')
+			print('+',str(dete),'dete')
 			print('----')
 			print('?',edgeload[tokenid])
 			exit()
+		descendants[tokenid]=str(descs)
+		return descs
 	else:
 		e = int(edgeload[govs[tokenid]])
 		edgeload[govs[tokenid]]= str(e-1)
 		m = int(mdfedges[govs[tokenid]])
 		mdfedges[govs[tokenid]] = str(m-1)
+		return -1
 		
 
 def rec_eval_nps(tokenid, gov, root_id, depth, absdepth):
@@ -163,6 +175,8 @@ def rec_eval_mods(startid, func, govtag, depth, absdepth):
 			newmod= modpattern.match(funcs[id])
 			cmod= newfunc[0]=='C' and newfunc[1:3]!='OR'
 			rec_eval_mods(id, (newfunc if newmod else (newfunc if cmod else func)), (postags[startid] if newmod else govtag), (depth+1 if newmod else depth), (absdepths[id] if newmod else absdepth))
+
+
 
 i=0
 file=sys.argv[1]
@@ -219,6 +233,7 @@ npabsdepths={}
 nplevels={}
 nprootids={}
 edgeload={}
+descendants={}
 sbjedges={}
 argedges={}
 modedges={}
@@ -228,6 +243,7 @@ crdedges={}
 auxedges={}
 prtedges={}
 coredges={}
+detedges={}
 ppgovtags={}
 ppfuncs={}
 ppdepths={}
@@ -267,7 +283,7 @@ l=len(roots)
 for rt in roots:
 	print('\tevaluating S-Node',count,'of',l)
 	count+=1
-	rec_eval_embedding(rt, 'S', 0, 0, 1, 1)
+	descendants[rt] = str(rec_eval_embedding(rt, 'S', 0, 0, 1, 1))
 
 print('evaluating NPs')
 
@@ -298,7 +314,7 @@ for mod in rootmods:
 	count+= 1
 	rec_eval_mods(mod, funcs[mod], postags[govs[mod]], 0, absdepths[mod])
 
-basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tabs_depth\tedgeload\tsbj_edges\targ_edges\tmod_edges\tmdf_edges\tclause_edges\tcoord_edges\taux_edges\tpart_edges\tcorrections\ts_parent\tdepth\tpp_func\tpp_gov\tpp_depth\tpp_absdepth\tnp_root\tnp_root_id\tnp_depth\tnp_absdepth\tmod_func\tmod_govtag\tmod_depth\tmod_absdepth'
+basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tabs_depth\tedgeload\tdescendants\tsbj_edges\targ_edges\tmod_edges\tdet_edges\tmdf_edges\tclause_edges\tcoord_edges\taux_edges\tpart_edges\tcorrections\ts_parent\tdepth\tpp_func\tpp_gov\tpp_depth\tpp_absdepth\tnp_root\tnp_root_id\tnp_depth\tnp_absdepth\tmod_func\tmod_govtag\tmod_depth\tmod_absdepth'
 nl = '\n'
 tab = '\t'
 
@@ -316,9 +332,11 @@ for sentence in root.iter(nstc+'sentence'):
 			basedata+= tab+funcs[tid]
 			basedata+= tab+('N/A' if not tid in absdepths else absdepths[tid])
 			basedata+= tab+('N/A' if not tid in edgeload else edgeload[tid])			
+			basedata+= tab+('N/A' if not tid in descendants else descendants[tid])			
 			basedata+= tab+('N/A' if not tid in sbjedges else sbjedges[tid])
 			basedata+= tab+('N/A' if not tid in argedges else argedges[tid])
 			basedata+= tab+('N/A' if not tid in modedges else modedges[tid])
+			basedata+= tab+('N/A' if not tid in detedges else detedges[tid])
 			basedata+= tab+('N/A' if not tid in mdfedges else mdfedges[tid])
 			basedata+= tab+('N/A' if not tid in clsedges else clsedges[tid])
 			basedata+= tab+('N/A' if not tid in crdedges else crdedges[tid])
