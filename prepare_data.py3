@@ -126,10 +126,13 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 		descendants[tokenid]=str(descs)
 		return descs
 	else:
-		e = int(edgeload[govs[tokenid]])
-		edgeload[govs[tokenid]]= str(e-1)
-		m = int(mdfedges[govs[tokenid]])
-		mdfedges[govs[tokenid]] = str(m-1)
+		gid=govs[tokenid]
+		if (gid in edgeload):
+			e = int(edgeload[gid])
+			edgeload[gid]= str(e-1)
+		if (gid in mdfedges):
+			m = int(mdfedges[gid])
+			mdfedges[gid] = str(m-1)
 		return -1
 		
 
