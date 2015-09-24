@@ -27,10 +27,10 @@ mdpattern = re.compile('(CORX?)?(G?MOD|ATTR)')
 
 prtpattern = re.compile('(CORX?)?(AVZ|PART)')
 
-parpattern = re.compile('C?(CORX?)?PAR[^T]')
+parpattern = re.compile('C?(CORX?)?(PAR[^T]|PRES|DR.*)')
 
 def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modsensitive):	
-	if (not parpattern.match(funcs[tokenid])):
+	if (not parpattern.match(funcs[tokenid])): #PRES and DR also out!
 		slevels[tokenid]= parentlevel
 		depths[tokenid]= str(depth)
 		absdepths[tokenid]= str(absdepth)
@@ -260,13 +260,15 @@ for node in funcs.keys():
 		depths[node]='0'
 	elif (func=='CS'):
 		domid=root.find(".//*[@depIDs='"+node+"'][@func='CS']").attrib['govIDs']
-		domdomid=root.find(".//*[@depIDs='"+domid+"']").attrib['govIDs']
-		if (funcs[domid]=='KON' and tokens[domdomid]=='_'):
-			roots.append(node)
-			slevels[node]='S'
-			slevels[domid]='S'
-			depths[node]='0'	
-			depths[domid]='0'		
+		domdom= root.find(".//*[@depIDs='"+domid+"']")
+		if (not domdom is None):
+			domdomid= domdom.attrib['govIDs']
+			if (funcs[domid]=='KON' and tokens[domdomid]=='_'):
+				roots.append(node)
+				slevels[node]='S'
+				slevels[domid]='S'
+				depths[node]='0'	
+				depths[domid]='0'		
 	#else:
 	#	slevels[node]=('S' if func!='N/A' else 'N/A')
 	#	depths[node]=('0' if func!='N/A' else 'N/A')		
@@ -314,7 +316,7 @@ for mod in rootmods:
 	count+= 1
 	rec_eval_mods(mod, funcs[mod], postags[govs[mod]], 0, absdepths[mod])
 
-basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tabs_depth\tedgeload\tdescendants\tsbj_edges\targ_edges\tmod_edges\tdet_edges\tmdf_edges\tclause_edges\tcoord_edges\taux_edges\tpart_edges\tcorrections\ts_parent\tdepth\tpp_func\tpp_gov\tpp_depth\tpp_absdepth\tnp_root\tnp_root_id\tnp_depth\tnp_absdepth\tmod_func\tmod_govtag\tmod_depth\tmod_absdepth'
+basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tgovpos\tgovfunc\tabs_depth\tedgeload\tdescendants\tsbj_edges\targ_edges\tmod_edges\tdet_edges\tmdf_edges\tclause_edges\tcoord_edges\taux_edges\tpart_edges\tcorrections\ts_parent\tdepth\tpp_func\tpp_gov\tpp_depth\tpp_absdepth\tnp_root\tnp_root_id\tnp_depth\tnp_absdepth\tmod_func\tmod_govtag\tmod_depth\tmod_absdepth'
 nl = '\n'
 tab = '\t'
 
@@ -328,8 +330,11 @@ for sentence in root.iter(nstc+'sentence'):
 			basedata+= tab+tokens[tid]
 			basedata+= tab+('N/A' if not tid in lemmas else lemmas[tid])
 			basedata+= tab+('N/A' if not tid in postags else postags[tid])
-			basedata+= tab+govs[tid]
+			g=govs[tid]
+			basedata+= tab+g
 			basedata+= tab+funcs[tid]
+			basedata+= tab+('N/A' if not g in postags else postags[g])			
+			basedata+= tab+('N/A' if not g in funcs else funcs[g])			
 			basedata+= tab+('N/A' if not tid in absdepths else absdepths[tid])
 			basedata+= tab+('N/A' if not tid in edgeload else edgeload[tid])			
 			basedata+= tab+('N/A' if not tid in descendants else descendants[tid])			
