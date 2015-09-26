@@ -140,7 +140,7 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 		descendants[tokenid]=str(descs)
 		return descs
 	else:
-		print('killing par')
+		print(pos[tokenid],'ignored')
 		write_to_blacklist(tokenid)
 		gid=govs[tokenid]
 		if (gid in edgeload):
@@ -347,18 +347,20 @@ if (all):
 
 
 
-basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tgovpos\tgovfunc\tabs_depth\tedgeload\tdescendants\tsbj_edges\targ_edges\tmod_edges\tdet_edges\tpn_edges\tmdf_edges\tclause_edges\tcoord_edges\taux_edges\tpart_edges\tcorrections\tobji\ts_parent\tdepth'+('\tpp_func\tpp_gov\tpp_depth\tpp_absdepth\tnp_root\tnp_root_id\tnp_depth\tnp_absdepth\tmod_func\tmod_govtag\tmod_depth\tmod_absdepth' if all else '')
+basedata = 'sentence\tsrun\ttoken\ttext\tlemma\tpos\tgov\tfunc\tgovpos\tgovfunc\tabs_depth\tedgeload\tdescendants\tsbj_edges\targ_edges\tmod_edges\tdet_edges\tpn_edges\tmdf_edges\tclause_edges\tcoord_edges\taux_edges\tpart_edges\tcorrections\tobji\ts_parent\tdepth'+('\tpp_func\tpp_gov\tpp_depth\tpp_absdepth\tnp_root\tnp_root_id\tnp_depth\tnp_absdepth\tmod_func\tmod_govtag\tmod_depth\tmod_absdepth' if all else '')
 nl = '\n'
 tab = '\t'
 
-print(blacklist)
 
 print('creating output')
 for sentence in root.iter(nstc+'sentence'):	
 	sid = 's'+sentence.attrib['tokenIDs'].split(' ')[0][1:]
+	srun=0
 	for tid in sentence.attrib['tokenIDs'].split(' '):
 		if (not tid in blacklist): #and tid in slevels or (tokens[tid]=='_') or (tid in postags and postags[tid][0]=='$')): 
+			srun+=1
 			basedata+= nl+sid[1:]#the s blocks a lot
+			basedata+= srun
 			basedata+= tab+tid
 			basedata+= tab+tokens[tid]
 			basedata+= tab+('N/A' if not tid in lemmas else lemmas[tid])
