@@ -140,7 +140,7 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 		descendants[tokenid]=str(descs)
 		return descs
 	else:
-		print(postags[tokenid],'ignored')
+		print(func[tokenid],'ignored')
 		write_to_blacklist(tokenid)
 		gid=govs[tokenid]
 		if (gid in edgeload):
@@ -360,7 +360,7 @@ for sentence in root.iter(nstc+'sentence'):
 		if (not tid in blacklist): #and tid in slevels or (tokens[tid]=='_') or (tid in postags and postags[tid][0]=='$')): 
 			srun+=1
 			basedata+= nl+sid[1:]#the s blocks a lot
-			basedata+= srun
+			basedata+= str(srun)
 			basedata+= tab+tid
 			basedata+= tab+tokens[tid]
 			basedata+= tab+('N/A' if not tid in lemmas else lemmas[tid])
