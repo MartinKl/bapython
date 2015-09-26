@@ -29,11 +29,11 @@ mdpattern = re.compile('(COR)?X?(G?MOD|ATTR)')
 
 prtpattern = re.compile('(COR)?X?(AVZ|PART)')
 
-parpattern = re.compile('C?(COR)?X?(PAR[^T]|PRES|DR.*)')
+parpattern = re.compile('C?(COR)?X?(PAR[^T]*|PRES|DR.*)')
 
 ppnpattern = re.compile('(COR)?X?PN')
 
-def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modsensitive):	
+def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modsensitive):			
 	if (not parpattern.match(funcs[tokenid])): #PRES and DR also out!
 		slevels[tokenid]= parentlevel
 		depths[tokenid]= str(depth)
@@ -140,6 +140,7 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 		descendants[tokenid]=str(descs)
 		return descs
 	else:
+		print('killing par')
 		write_to_blacklist(tokenid)
 		gid=govs[tokenid]
 		if (gid in edgeload):
@@ -350,11 +351,13 @@ basedata = 'sentence\ttoken\ttext\tlemma\tpos\tgov\tfunc\tgovpos\tgovfunc\tabs_d
 nl = '\n'
 tab = '\t'
 
+print(blacklist)
+
 print('creating output')
 for sentence in root.iter(nstc+'sentence'):	
 	sid = 's'+sentence.attrib['tokenIDs'].split(' ')[0][1:]
 	for tid in sentence.attrib['tokenIDs'].split(' '):
-		if (not tid in blacklist and tid in slevels or (tokens[tid]=='_') or (tid in postags and postags[tid][0]=='$')): 
+		if (not tid in blacklist): #and tid in slevels or (tokens[tid]=='_') or (tid in postags and postags[tid][0]=='$')): 
 			basedata+= nl+sid[1:]#the s blocks a lot
 			basedata+= tab+tid
 			basedata+= tab+tokens[tid]
