@@ -29,12 +29,13 @@ mdpattern = re.compile('(COR)?X?(G?MOD|ATTR)')
 
 prtpattern = re.compile('(COR)?X?(AVZ|PART)')
 
-parpattern = re.compile('C?(COR)?X?(PAR[^T]?|PRES|DR.*)')
+parpattern = re.compile('C?(COR)?X?(PAR|PRES|DR.*)')
 
 ppnpattern = re.compile('(COR)?X?PN')
 
 def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modsensitive):			
-	if (not parpattern.match(funcs[tokenid])): #PRES and DR also out!
+	ftid=funcs[tokenid]
+	if (not parpattern.match(ftid) and ftid=='PART'): #PRES and DR also out!
 		slevels[tokenid]= parentlevel
 		depths[tokenid]= str(depth)
 		absdepths[tokenid]= str(absdepth)
@@ -140,7 +141,7 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 		descendants[tokenid]=str(descs)
 		return descs
 	else:
-		print(funcs[tokenid],'ignored')
+		print(ftid,'ignored')
 		write_to_blacklist(tokenid)
 		gid=govs[tokenid]
 		if (gid in edgeload):
