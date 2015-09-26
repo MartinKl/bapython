@@ -35,7 +35,7 @@ ppnpattern = re.compile('(COR)?X?PN')
 
 def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modsensitive):			
 	ftid=funcs[tokenid]
-	if (not parpattern.match(ftid) and ftid=='PART'): #PRES and DR also out!
+	if (not parpattern.match(ftid) or ftid=='PART'): #PRES and DR also out!
 		slevels[tokenid]= parentlevel
 		depths[tokenid]= str(depth)
 		absdepths[tokenid]= str(absdepth)
