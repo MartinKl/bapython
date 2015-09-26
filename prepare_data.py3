@@ -360,8 +360,8 @@ for sentence in root.iter(nstc+'sentence'):
 	for tid in sentence.attrib['tokenIDs'].split(' '):
 		if (not tid in blacklist): #and tid in slevels or (tokens[tid]=='_') or (tid in postags and postags[tid][0]=='$')): 
 			srun+=1
-			basedata+= nl+sid[1:]#the s blocks a lot
-			basedata+= str(srun)
+			basedata+= nl+sid[1:].replace('_','')#the s blocks a lot
+			basedata+= tab+str(srun)
 			basedata+= tab+tid
 			basedata+= tab+tokens[tid]
 			basedata+= tab+('N/A' if not tid in lemmas else lemmas[tid])
