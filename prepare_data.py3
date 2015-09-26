@@ -29,7 +29,7 @@ mdpattern = re.compile('(COR)?X?(G?MOD|ATTR)')
 
 prtpattern = re.compile('(COR)?X?(AVZ|PART)')
 
-parpattern = re.compile('C?(COR)?X?(PAR[^T]*|PRES|DR.*)')
+parpattern = re.compile('C?(COR)?X?(PAR[^T]?|PRES|DR.*)')
 
 ppnpattern = re.compile('(COR)?X?PN')
 
