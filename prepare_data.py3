@@ -140,6 +140,7 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 		descendants[tokenid]=str(descs)
 		return descs
 	else:
+		write_to_blacklist(tokenid)
 		gid=govs[tokenid]
 		if (gid in edgeload):
 			e = int(edgeload[gid])
@@ -149,6 +150,11 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 			mdfedges[gid] = str(m-1)
 		return -1
 		
+def write_to_blacklist(tokenid):
+	blacklist.append(tokenid)
+	children = root.findall(".//*[@govIDs='"+tokenid+"']")
+	for child in children:
+		write_to_blacklist(child.attrib['depIDs'])
 
 def rec_eval_nps(tokenid, gov, root_id, depth, absdepth):
 	if (not parpattern.match(funcs[tokenid])):
@@ -241,6 +247,8 @@ roots=[]
 rootnps=[]
 pproots=[]
 rootmods=[]
+
+blacklist=[] #we introduce a blacklist, to FINALLY keep parentheses out (blacklist is faster)
 
 slevels={}
 depths={}
@@ -346,7 +354,7 @@ print('creating output')
 for sentence in root.iter(nstc+'sentence'):	
 	sid = 's'+sentence.attrib['tokenIDs'].split(' ')[0][1:]
 	for tid in sentence.attrib['tokenIDs'].split(' '):
-		if (tid in slevels or (tokens[tid]=='_') or (tid in postags and postags[tid][0]=='$')): #"_"-Elements are right now not in the exported data
+		if (not tid in blacklist and tid in slevels or (tokens[tid]=='_') or (tid in postags and postags[tid][0]=='$')): 
 			basedata+= nl+sid[1:]#the s blocks a lot
 			basedata+= tab+tid
 			basedata+= tab+tokens[tid]
