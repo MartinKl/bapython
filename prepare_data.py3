@@ -33,6 +33,12 @@ parpattern = re.compile('C?(COR)?X?(PAR|PRES|DR.*)')
 
 ppnpattern = re.compile('(COR)?X?PN')
 
+nattrpattern = re.comile('(COR)?X?ATTR')
+nmodpattern = re.comile('(COR)?X?MOD')
+ngmodpattern = re.compile('(COR)?X?GMOD')
+
+apprpattern = re.compile('APP(R(ART)?|O)')
+
 def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modsensitive):			
 	ftid=funcs[tokenid]
 	if (not parpattern.match(ftid) or ftid=='PART'): #PRES and DR also out!
@@ -56,13 +62,29 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 		obji=0
 		ppne=0
 		descs=len(children)
+		nattr=0
+		nmod=0
+		nmodp=0
+		ngmod=0
 		for child in children:				
 			sensitive=npsensitive
 			ms = modsensitive
 			id = child.attrib['depIDs']
 			func=funcs[id]			
 			coord= func=='KON' or (func[0]=='C' and func[1:3]!='OR')
-			mdfs+=1					
+			mdfs+=1		
+			##for the nominals:
+			if (not parpattern.match(ftid) or ftid=='PART'):
+				if (nattrpattern.match(func)):
+					nattr+=1
+				elif (ngmodpattern.match(func)):
+					ngmod+=1
+				elif (nmodpattern.match(func)):				
+					if (apprpattern.match(postags[id])):
+						ngmod+=1
+					else:
+						nmod+=1			
+			##for all:			
 			if (func=='OBJI'):
 				obji+=1 ##objis are counted twice	
 			elif (coord):
@@ -122,6 +144,12 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 		detedges[tokenid]= str(dete)
 		iobedges[tokenid]= str(obji)
 		ppnedges[tokenid]= str(ppne)
+		
+		nattredges[tokenid]= str(nattr)
+		ngmodedges[tokenid]= str(ngmod)
+		nmodpedges[tokenid]= str(nmodp)
+		nmodedges[tokenid] = str(nmod)
+		
 		#TEST:
 		if (ppne+subj+dete+args+mods+mdfs+clse+cooe+auxe+prte!=len(children)):
 			print('error with edgeload splitting',tokenid,':')
@@ -273,6 +301,12 @@ coredges={}
 detedges={}
 iobedges={}
 ppnedges={}
+
+nattredges={}
+nmodedges={}
+nmodpedges={}
+ngmodedges={}
+
 ppgovtags={}
 ppfuncs={}
 ppdepths={}
@@ -348,7 +382,7 @@ if (all):
 
 
 
-basedata = 'sentence\tsrun\ttoken\ttext\tlemma\tpos\tgov\tfunc\tgovpos\tgovfunc\tabs_depth\tedgeload\tdescendants\tsbj_edges\targ_edges\tmod_edges\tdet_edges\tpn_edges\tmdf_edges\tclause_edges\tcoord_edges\taux_edges\tpart_edges\tcorrections\tobji\ts_parent\tdepth'+('\tpp_func\tpp_gov\tpp_depth\tpp_absdepth\tnp_root\tnp_root_id\tnp_depth\tnp_absdepth\tmod_func\tmod_govtag\tmod_depth\tmod_absdepth' if all else '')
+basedata = 'sentence\tsrun\ttoken\ttext\tlemma\tpos\tgov\tfunc\tgovpos\tgovfunc\tabs_depth\tedgeload\tdescendants\tsbj_edges\targ_edges\tmod_edges\tdet_edges\tpn_edges\tmdf_edges\tclause_edges\tcoord_edges\taux_edges\tpart_edges\tcorrections\tobji\tnattr\tnmod\tnmodp\tngmod\ts_parent\tdepth'+('\tpp_func\tpp_gov\tpp_depth\tpp_absdepth\tnp_root\tnp_root_id\tnp_depth\tnp_absdepth\tmod_func\tmod_govtag\tmod_depth\tmod_absdepth' if all else '')
 nl = '\n'
 tab = '\t'
 
@@ -386,6 +420,10 @@ for sentence in root.iter(nstc+'sentence'):
 			basedata+= tab+('N/A' if not tid in prtedges else prtedges[tid])
 			basedata+= tab+('N/A' if not tid in coredges else coredges[tid])			
 			basedata+= tab+('N/A' if not tid in iobedges else iobedges[tid])	
+			basedata+= tab+('N/A' if not tid in nattredges else nattredges[tid])
+			basedata+= tab+('N/A' if not tid in nmodedges else nmodedges[tid])
+			basedata+= tab+('N/A' if not tid in nmodpedges else nmodpedges[tid])
+			basedata+= tab+('N/A' if not tid in ngmodedges else ngmodedges[tid])			
 			basedata+= tab+('N/A' if not tid in slevels else slevels[tid])			
 			basedata+= tab+('N/A' if not tid in depths else depths[tid])	
 			if (all):	
