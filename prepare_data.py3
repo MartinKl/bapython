@@ -33,8 +33,8 @@ parpattern = re.compile('C?(COR)?X?(PAR|PRES|DR.*)')
 
 ppnpattern = re.compile('(COR)?X?PN')
 
-nattrpattern = re.comile('(COR)?X?ATTR')
-nmodpattern = re.comile('(COR)?X?MOD')
+nattrpattern = re.compile('(COR)?X?ATTR')
+nmodpattern = re.compile('(COR)?X?MOD')
 ngmodpattern = re.compile('(COR)?X?GMOD')
 
 apprpattern = re.compile('APP(R(ART)?|O)')
