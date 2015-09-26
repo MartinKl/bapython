@@ -140,7 +140,7 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 		descendants[tokenid]=str(descs)
 		return descs
 	else:
-		print(pos[tokenid],'ignored')
+		print(postags[tokenid],'ignored')
 		write_to_blacklist(tokenid)
 		gid=govs[tokenid]
 		if (gid in edgeload):
