@@ -356,9 +356,9 @@ tab = '\t'
 print('creating output')
 for sentence in root.iter(nstc+'sentence'):	
 	sid = 's'+sentence.attrib['tokenIDs'].split(' ')[0][1:]
-	srun=0
+	srun=-1
 	for tid in sentence.attrib['tokenIDs'].split(' '):
-		if (not tid in blacklist): #and tid in slevels or (tokens[tid]=='_') or (tid in postags and postags[tid][0]=='$')): 
+		if (not tid in blacklist and tid in slevels): #and tid in slevels or (tokens[tid]=='_') or (tid in postags and postags[tid][0]=='$')): 
 			srun+=1
 			basedata+= nl+sid[1:].replace('_','')#the s blocks a lot
 			basedata+= tab+str(srun)
