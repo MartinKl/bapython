@@ -81,7 +81,7 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 					ngmod+=1
 				elif (nmodpattern.match(func)):				
 					if (apprpattern.match(postags[id])):
-						ngmod+=1
+						nmodp+=1
 					else:
 						nmod+=1			
 			##for all:			
