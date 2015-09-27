@@ -39,6 +39,8 @@ ngmodpattern = re.compile('(COR)?X?GMOD')
 
 apprpattern = re.compile('APP(R(ART)?|O)')
 
+objipattern = re.compile('C?(COR)?X?OBJI')
+
 def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modsensitive):			
 	ftid=funcs[tokenid]
 	if (not parpattern.match(ftid) or ftid=='PART'): #PRES and DR also out!
@@ -124,11 +126,12 @@ def rec_eval_embedding(tokenid, parentlevel, depth, absdepth, npsensitive, modse
 				rootmods.append(id)
 				modgovtags[id] = postags[tokenid]
 				ms= 0
+			oi= objipattern.match(func)	
 			if (edgetypes.match(func)):								
 				if (not coord):
 					mdfs-=1
 					clse+=1
-				descs+=rec_eval_embedding(id, func, depth+(0 if conclauseedges.match(func) else 1), (absdepth if coord else absdepth+1), sensitive, ms)
+				descs+=rec_eval_embedding(id, func, depth+(0 if oi or conclauseedges.match(func) else 1), (absdepth if coord else absdepth+1), sensitive, ms)
 			else:
 				descs+=rec_eval_embedding(id, parentlevel, depth, (absdepth if coord else absdepth+1), sensitive, ms)
 				
